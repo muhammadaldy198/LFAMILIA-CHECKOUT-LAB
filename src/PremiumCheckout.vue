@@ -1,6 +1,8 @@
 <script setup>
 import { computed, reactive, ref, watch } from 'vue'
 import LfamiliaPaymentMethods from './LfamiliaPaymentMethods.vue'
+import LabVoucherModal from './LabVoucherModal.vue'
+import { quoteForChannel } from './lab-pricing.js'
 const props=defineProps({product:{type:Object,required:true},packages:{type:Array,default:()=>[]},fields:{type:Array,default:()=>[]},paymentChannels:{type:Array,default:()=>[]}})
 const chosen=ref(null),method=ref(''),whatsapp=ref(''),email=ref(''),voucherInput=ref(''),voucher=ref(''),error=ref(''),voucherModal=ref(false),confirmModal=ref(false),successModal=ref(false),tab=ref('transaksi')
 const account=reactive({})
@@ -28,9 +30,10 @@ const selected=computed(()=>props.packages.find(x=>String(x.id)===String(chosen.
 const payment=computed(()=>props.paymentChannels.find(x=>x.code===method.value))
 const price=computed(()=>Number(selected.value?.price_idr)||0)
 const subtotal=computed(()=>price.value)
-const discount=computed(()=>voucher.value==='DEMO2000'?Math.min(2000,subtotal.value):voucher.value==='LF10'?Math.min(Math.floor(subtotal.value*.1),10000):0)
-const fee=computed(()=>payment.value?.group==='qris'?Math.ceil((subtotal.value-discount.value)*.007):payment.value?.group==='va'?4000:payment.value?.group==='ewallet'?1000:0)
-const total=computed(()=>Math.max(0,subtotal.value-discount.value+fee.value))
+const pricing=computed(()=>quoteForChannel(subtotal.value,voucher.value,payment.value))
+const discount=computed(()=>pricing.value.discount)
+const fee=computed(()=>pricing.value.fee)
+const total=computed(()=>pricing.value.total)
 watch(()=>props.product.slug,()=>{chosen.value=null;activePackageTab.value='';method.value='';voucher.value='';voucherInput.value='';tab.value='transaksi';whatsapp.value='';Object.keys(account).forEach(x=>delete account[x])})
 function notify(message){window.dispatchEvent(new CustomEvent('lab:notice',{detail:message}))}
 function applyVoucher(code=voucherInput.value){const v=String(code||'').trim().toUpperCase();if(!vouchers.some(x=>x.code===v)){error.value=v?'Kode voucher tidak tersedia pada demo.':'Masukkan kode voucher terlebih dahulu.';return}voucher.value=v;voucherInput.value=v;error.value='';voucherModal.value=false}
@@ -81,7 +84,7 @@ function order(){const missing=props.fields.some(x=>x.is_required&&!String(accou
             </section>
             <section id="lfx-payment" class="lfx-panel">
               <header class="lfx-panel-header"><span class="lfx-number">3</span><div><h2>Pilih Pembayaran</h2></div></header>
-              <LfamiliaPaymentMethods :payment-channels="paymentChannels" :selected-code="method" @select="method=$event"/>
+              <LfamiliaPaymentMethods :payment-channels="paymentChannels" :selected-code="method" :subtotal-idr="subtotal" :voucher-code="voucher" @select="method=$event"/>
             </section>
             <section class="lfx-panel" id="lfx-voucher"><header class="lfx-panel-header"><span class="lfx-number">4</span><div><h2>Voucher Diskon</h2></div></header><div class="lfx-panel-content"><div class="lfx-voucher-input"><span>⌗</span><input v-model="voucherInput" placeholder="Masukkan kode voucher" aria-label="Kode voucher diskon" autocapitalize="characters" @keyup.enter="applyVoucher()"/><button @click="applyVoucher()">Gunakan</button></div><p v-if="error" class="lfx-error">{{error}}</p><div v-if="voucher" class="lfx-applied"><span>✓</span><div><strong>{{voucher}} berhasil dipakai</strong><small>Diskon {{money(discount)}}</small></div><button @click="voucher='';voucherInput='';error=''">Hapus</button></div><button class="lfx-voucher-browse" @click="voucherModal=true"><span>♧</span><strong>Lihat voucher yang tersedia</strong><b>→</b></button></div></section>
             <section id="lfx-contact" class="lfx-panel"><header class="lfx-panel-header"><span class="lfx-number">5</span><div><h2>Detail Kontak</h2></div></header><div class="lfx-panel-content"><div class="lfx-field-grid"><label class="lfx-field"><span>Nomor WhatsApp <b>*</b></span><input v-model="whatsapp" type="tel" inputmode="tel" placeholder="081234567890"/></label><label class="lfx-field"><span>Email <em>(opsional)</em></span><input v-model="email" type="email" placeholder="nama@email.com"/></label></div><div class="lfx-hint"><span>i</span> Ini hanya preview, data tidak dikirim ke sistem transaksi.</div></div></section>
@@ -101,7 +104,7 @@ function order(){const missing=props.fields.some(x=>x.is_required&&!String(accou
   </main>
   <div class="lfx-sticky-mobile"><div class="lfx-sticky-selection">{{selected?.name||'Belum ada item produk yang dipilih.'}}</div><button @click="order">Bayar Sekarang <b>→</b></button></div>
 
-  <div v-if="voucherModal" class="lfx-modal-backdrop" @click.self="voucherModal=false"><div class="lfx-modal" role="dialog" aria-modal="true" aria-labelledby="voucher-modal-title"><div class="lfx-modal-header"><div><small>EXCLUSIVE OFFERS</small><h2 id="voucher-modal-title">Pilih Voucher Diskon</h2></div><button aria-label="Tutup" @click="voucherModal=false">×</button></div><p class="lfx-modal-description">Voucher di bawah khusus simulasi frontend.</p><div class="lfx-voucher-list"><button v-for="v in vouchers" :key="v.code" @click="applyVoucher(v.code)" class="lfx-voucher-option"><span>%</span><div><strong>{{v.name}}</strong><small>{{v.detail}}</small><code>{{v.code}}</code></div><b>Pakai →</b></button></div><p class="lfx-modal-note">Tidak berlaku di LFAMILIA STORE production.</p></div></div>
+  <LabVoucherModal v-if="voucherModal" :vouchers="vouchers" @close="voucherModal=false" @apply="applyVoucher($event)"/>
   <div v-if="confirmModal" class="lfx-modal-backdrop" @click.self="confirmModal=false"><div class="lfx-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title"><div class="lfx-modal-header"><div><small>FINAL CHECK</small><h2 id="confirm-title">Konfirmasi Pesanan</h2></div><button aria-label="Tutup" @click="confirmModal=false">×</button></div><p class="lfx-modal-description">Periksa kembali rincian simulasi pesananmu.</p><div class="lfx-confirm-rows">
   <div><span>Produk</span><b>{{product.name}}</b></div>
   <div v-for="field in fields" :key="field.field_key"><span>{{field.label}}</span><b>{{account[field.field_key]}}</b></div>
