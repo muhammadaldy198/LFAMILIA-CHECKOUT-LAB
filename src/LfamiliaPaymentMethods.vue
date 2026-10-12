@@ -21,8 +21,6 @@ const quote = channel => quoteForChannel(props.subtotalIdr, props.voucherCode, c
 const amount = channel => props.subtotalIdr > 0 ? idr(quote(channel).total) : 'Pilih nominal';
 const groupChannel = group => group.items.find(channel => channel.code === paymentChannelCode.value)
   || group.items.find(channel => channel.available !== false) || group.items[0];
-const selectedChannel = computed(() => props.paymentChannels.find(channel => channel.code === props.selectedCode));
-const selectedQuote = computed(() => quote(selectedChannel.value));
 const customerText = (_key, fallback) => fallback;
 
 // Grouping, ordering, and selection semantics from LFAMILIA-STORE main.
@@ -107,28 +105,26 @@ function choosePayment(code) {
 
                             <div
                                 v-if="group.key!=='wallet' && group.key!=='qris' && group.items.some(x=>x.code===paymentChannelCode)"
-                                class="lf-payment-channel-grid"
+                                class="lab-payment-method-grid"
+                                role="radiogroup"
+                                :aria-label="'Pilih metode '+group.title"
                             >
-                                <button
+                                <div
                                     v-for="channel in group.items"
                                     :key="channel.code"
-                                    type="button"
-                                    :disabled="channel.available===false"
-                                    :class="{selected:paymentChannelCode===channel.code}"
+                                    class="lab-payment-method-card"
+                                    :class="{ 'is-selected': paymentChannelCode === channel.code, 'is-unavailable': channel.available===false }"
+                                    role="radio"
+                                    :aria-checked="paymentChannelCode===channel.code"
+                                    :aria-disabled="channel.available===false"
+                                    :tabindex="channel.available===false?-1:0"
                                     @click="choosePayment(channel.code)"
+                                    @keydown.enter.prevent="choosePayment(channel.code)"
+                                    @keydown.space.prevent="choosePayment(channel.code)"
                                 >
-                                    <span class="lf-payment-channel-copy lab-payment-option-copy">
-                                        <strong>{{channel.name}}</strong>
-                                        <span class="lab-payment-option-total">{{amount(channel)}}</span>
-                                        <small class="lab-payment-automatic">Proses Otomatis</small>
-                                    </span>
-                                </button>
-                            </div>
-                            <div v-if="subtotalIdr>0 && group.items.some(x=>x.code===paymentChannelCode)" class="lab-payment-breakdown" aria-live="polite">
-                              <div class="lab-payment-breakdown-row"><span>Harga produk</span><strong>{{idr(selectedQuote.subtotal)}}</strong></div>
-                              <div v-if="selectedQuote.discount" class="lab-payment-breakdown-row lab-payment-discount"><span>Diskon {{voucherCode}}</span><strong>− {{idr(selectedQuote.discount)}}</strong></div>
-                              <div class="lab-payment-breakdown-row"><span>Biaya pembayaran <small>(simulasi)</small></span><strong>{{idr(selectedQuote.fee)}}</strong></div>
-                              <div class="lab-payment-breakdown-final"><span>Total bayar</span><strong>{{idr(selectedQuote.total)}}</strong></div>
+                                    <strong class="lab-payment-method-name">{{channel.name}}</strong>
+                                    <span class="lab-payment-method-total">{{amount(channel)}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -145,85 +141,93 @@ function choosePayment(code) {
   border-radius: 11px !important;
 }
 
-/* Local pricing presentation for the original LFAMILIA-STORE payment component.
-   The lab uses one quote function for per-method prices and checkout summary. */
+/* Isolated method grid: the global LFAMILIA CSS forces 40px buttons.
+   These non-button radio cards are sized entirely within Checkout Lab. */
 .lab-payment-amount {
-  display: block;
   flex: 0 0 auto;
-  white-space: nowrap;
-  color: #e1edff;
+  display: inline-block;
+  margin-left: auto;
+  color: #e2efff;
   font-size: 12px;
+  line-height: 1.3;
   font-weight: 850;
   font-variant-numeric: tabular-nums;
-  margin-left: auto;
-}
-.lab-payment-option-copy {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  justify-content: flex-start !important;
-  gap: 6px !important;
-  min-width: 0;
-  width: 100%;
-  text-align: left !important;
-  white-space: normal !important;
-}
-.lab-payment-option-copy strong { font-size: 11px; line-height: 1.35; overflow-wrap: anywhere; }
-.lab-payment-option-total {
-  color: #edf4ff;
-  font-size: 12px;
-  font-weight: 900;
-  line-height: 1.3;
   white-space: nowrap;
-  font-variant-numeric: tabular-nums;
 }
-.lab-payment-automatic {
-  display: block;
+.lab-payment-method-grid {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  gap: 12px;
+  align-items: stretch;
   width: 100%;
-  color: #b5c5d7;
-  border-top: 1px dashed #e3ebff24;
-  padding-top: 6px;
-  font-size: 10px;
-  font-style: italic;
-  font-weight: 500;
-  line-height: 1.25;
+  min-width: 0;
+  padding: 14px;
+  border-top: 1px solid rgba(190, 213, 240, .14);
+  background: rgba(4, 12, 25, .22);
 }
-.lf-payment-channel-grid > button { text-align: left; height: auto; min-height: 116px; align-items: stretch; }
-.lab-payment-breakdown {
+.lab-payment-method-card {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  border-top: 1px solid #a5bdd72e;
-  background: #121f30;
-  padding: 13px 15px;
-  color: #cfdbef;
-  font-size: 11px;
-}
-.lab-payment-breakdown-row,
-.lab-payment-breakdown-final {
-  display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
+  gap: 17px;
+  min-height: 110px;
+  width: 100%;
   min-width: 0;
+  height: auto;
+  padding: 14px;
+  border: 1px solid rgba(166, 190, 226, .28);
+  border-radius: 11px;
+  background: linear-gradient(145deg, #303f53, #263448);
+  color: #eff5ff;
+  cursor: pointer;
+  text-align: left;
+  user-select: none;
 }
-.lab-payment-breakdown-row span { min-width: 0; overflow-wrap: anywhere; }
-.lab-payment-breakdown-row small { color: #859db9; font-size: 9px; }
-.lab-payment-breakdown-row strong { flex: 0 0 auto; white-space: nowrap; color: #e8f0ff; font-variant-numeric: tabular-nums; }
-.lab-payment-discount strong { color: #bee991; }
-.lab-payment-breakdown-final {
-  border-top: 1px solid #a5bdd72d;
-  margin-top: 3px;
-  padding-top: 10px;
-  font-size: 13px;
+.lab-payment-method-card.is-selected {
+  border-color: #a6cdfd;
+  background: linear-gradient(145deg, #36547b, #293d5b);
+  box-shadow: inset 0 0 0 1px rgba(185, 219, 255, .22);
+}
+.lab-payment-method-card.is-unavailable {
+  opacity: .48;
+  cursor: not-allowed;
+}
+.lab-payment-method-card:focus-visible {
+  outline: 2px solid #add4ff;
+  outline-offset: 2px;
+}
+.lab-payment-method-name {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.4;
   font-weight: 850;
-  color: #f2f7ff;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
-.lab-payment-breakdown-final strong { color: #b8d8ff; white-space: nowrap; font-size: 15px; font-variant-numeric: tabular-nums; }
-@media (max-width: 370px) {
- .lab-payment-amount { font-size: 10px; }
- .lab-payment-breakdown { padding: 10px; }
- .lab-payment-breakdown-final strong { font-size: 13px; }
+.lab-payment-method-total {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding-top: 10px;
+  border-top: 1px solid rgba(215, 231, 255, .22);
+  color: #f3f8ff;
+  font-size: 13px;
+  line-height: 1.25;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 390px) {
+  .lab-payment-method-grid { gap: 9px; padding: 10px; }
+  .lab-payment-method-card { padding: 12px 10px; gap: 15px; }
+  .lab-payment-method-name { font-size: 11px; }
+  .lab-payment-method-total { font-size: 12px; }
 }
 
 </style>
