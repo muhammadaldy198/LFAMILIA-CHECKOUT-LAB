@@ -3,7 +3,7 @@ import { computed, reactive, ref, watch } from 'vue'
 const props=defineProps({product:{type:Object,required:true},packages:{type:Array,default:()=>[]},fields:{type:Array,default:()=>[]},paymentChannels:{type:Array,default:()=>[]}})
 const chosen=ref(null),method=ref(''),whatsapp=ref(''),email=ref(''),voucherInput=ref(''),voucher=ref(''),error=ref(''),voucherModal=ref(false),confirmModal=ref(false),successModal=ref(false),tab=ref('transaksi')
 const account=reactive({})
-const expanded=ref(['wallet'])
+const expanded=ref([])
 const payments=[{id:'wallet',title:'LFAMILIA Coin',subtitle:'Pembayaran dengan koin LFAMILIA',symbol:'LF'},{id:'qris',title:'QRIS',subtitle:'Scan dengan aplikasi pembayaran',symbol:'▦'},{id:'ewallet',title:'E-Wallet',subtitle:'Dompet digital',symbol:'◉'},{id:'va',title:'Virtual Account',subtitle:'Transfer bank otomatis',symbol:'▥'},{id:'retail',title:'Gerai Retail',subtitle:'Pembayaran di gerai',symbol:'▣'},{id:'other',title:'Metode Lain',subtitle:'Metode pembayaran lainnya',symbol:'✦'}]
 const vouchers=[{code:'DEMO2000',name:'Potongan Rp 2.000',detail:'Hemat langsung untuk semua nominal'},{code:'LF10',name:'Diskon 10%',detail:'Maksimal Rp 10.000'}]
 const money=n=>'Rp '+Math.max(0,Math.round(Number(n)||0)).toLocaleString('id-ID')
@@ -39,7 +39,7 @@ const groupedPayments=computed(()=>{
 watch(()=>props.product.slug,()=>{chosen.value=null;activePackageTab.value='';method.value='';voucher.value='';voucherInput.value='';tab.value='transaksi';whatsapp.value='';Object.keys(account).forEach(x=>delete account[x])})
 function notify(message){window.dispatchEvent(new CustomEvent('lab:notice',{detail:message}))}
 function applyVoucher(code=voucherInput.value){const v=String(code||'').trim().toUpperCase();if(!vouchers.some(x=>x.code===v)){error.value=v?'Kode voucher tidak tersedia pada demo.':'Masukkan kode voucher terlebih dahulu.';return}voucher.value=v;voucherInput.value=v;error.value='';voucherModal.value=false}
-function togglePayment(id){expanded.value=expanded.value.includes(id)?expanded.value.filter(x=>x!==id):[...expanded.value,id]}
+function togglePayment(id){expanded.value=expanded.value.includes(id)?[]:[id]}
 function order(){const missing=props.fields.some(x=>x.is_required&&!String(account[x.field_key]||'').trim());if(missing){notify('Lengkapi data akun terlebih dahulu.');document.getElementById('lfx-account')?.scrollIntoView({behavior:'smooth'});return}if(!chosen.value){notify('Pilih nominal terlebih dahulu.');return}if(!method.value){notify('Pilih metode pembayaran terlebih dahulu.');document.getElementById('lfx-payment')?.scrollIntoView({behavior:'smooth'});return}if(!/^[+]?[0-9 ]{9,18}$/.test(whatsapp.value.trim())){notify('Isi nomor WhatsApp yang valid untuk demo.');document.getElementById('lfx-contact')?.scrollIntoView({behavior:'smooth'});return}confirmModal.value=true}
 function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:'BNI',wallet:'LF'};return m[x.code]||x.name?.slice(0,2).toUpperCase()||'PAY'}
 </script>
@@ -58,9 +58,9 @@ function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:
       <div class="lfx-layout">
         <div class="lfx-sections">
           <template v-if="tab==='transaksi'">
-            <section id="lfx-account" class="lfx-panel"><header class="lfx-panel-header"><span class="lfx-number">1</span><div><h2>Masukkan Data Akun</h2><p>Isi data akun tujuan dengan benar</p></div></header><div class="lfx-panel-content"><div class="lfx-field-grid" :class="{single:fields.length===1}"><label v-for="field in fields" :key="field.field_key" class="lfx-field"><span>{{field.label}} <b v-if="field.is_required">*</b><i title="Pastikan data akun benar">ⓘ</i></span><input v-model="account[field.field_key]" :placeholder="field.placeholder||'Masukkan '+field.label" :type="field.type==='number'?'number':'text'" autocomplete="off"/></label></div><div class="lfx-hint"><span>i</span> Pastikan ID atau Server sudah sesuai sebelum memesan.</div></div></section>
+            <section id="lfx-account" class="lfx-panel"><header class="lfx-panel-header"><span class="lfx-number">1</span><div><h2>Data Akun</h2></div></header><div class="lfx-panel-content"><div class="lfx-field-grid" :class="{single:fields.length===1}"><label v-for="field in fields" :key="field.field_key" class="lfx-field"><span>{{field.label}} <b v-if="field.is_required">*</b><i title="Pastikan data akun benar">ⓘ</i></span><input v-model="account[field.field_key]" :placeholder="field.placeholder||'Masukkan '+field.label" :type="field.type==='number'?'number':'text'" autocomplete="off"/></label></div><div class="lfx-hint"><span>i</span> Pastikan ID atau Server sudah sesuai sebelum memesan.</div></div></section>
             <section id="lfx-nominal" class="lfx-panel">
-              <header class="lfx-panel-header"><span class="lfx-number">2</span><div><h2>Pilih Nominal</h2><p>Item tersedia sesuai katalog LFAMILIA</p></div></header>
+              <header class="lfx-panel-header"><span class="lfx-number">2</span><div><h2>Pilih Nominal</h2></div></header>
               <div class="lfx-panel-content">
                 <div v-if="packageTabs.length" class="lfx-category-tabs" role="tablist" aria-label="Kategori dari LFAMILIA"><button v-for="item in packageTabs" :key="item" role="tab" :aria-selected="(activePackageTab||packageTabs[0])===item" :class="{active:(activePackageTab||packageTabs[0])===item}" @click="activePackageTab=item">{{item}}</button></div>
                 <section v-for="itemsGroup in visiblePackageGroups" :key="itemsGroup.name||'default'" class="lfx-nominal-group">
@@ -76,7 +76,7 @@ function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:
                 <div v-if="!visiblePackageGroups.length" class="lfx-empty">Nominal belum tersedia.</div>
               </div>
             </section>
-            <section id="lfx-payment" class="lfx-panel"><header class="lfx-panel-header"><span class="lfx-number">3</span><div><h2>Pilih Pembayaran</h2><p>Pilih metode pembayaran yang tersedia</p></div></header>
+            <section id="lfx-payment" class="lfx-panel"><header class="lfx-panel-header"><span class="lfx-number">3</span><div><h2>Pilih Pembayaran</h2></div></header>
               <div class="lfx-panel-content">
                 <div class="lfx-pay-list">
                   <section v-for="category in groupedPayments" :key="category.id" class="lfx-pay-group" :class="{selected:category.methods.some(x=>x.code===method),coin:category.id==='wallet'}">
@@ -91,9 +91,9 @@ function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:
                     <template v-else>
                       <button class="lfx-pay-title" :aria-expanded="expanded.includes(category.id)" @click="togglePayment(category.id)">
                         <span class="lfx-pay-symbol">{{category.symbol}}</span>
-                        <span class="lfx-pay-description"><strong>{{category.title}}</strong><small>{{category.subtitle}}</small></span>
+                        <span class="lfx-pay-description"><strong>{{category.title}}</strong></span>
                         <span class="lfx-pay-icons"><span v-for="entry in category.methods.slice(0,4)" :key="entry.code">{{shortLogo(entry)}}</span></span>
-                        <span class="lfx-pay-chevron" :class="{open:expanded.includes(category.id)}">⌄</span>
+                        <span class="lfx-pay-chevron" :class="{open:expanded.includes(category.id)}" aria-hidden="true"></span>
                       </button>
                       <div v-if="expanded.includes(category.id)" class="lfx-pay-grid" :class="{'lfx-pay-grid-va':category.id==='va'}">
                         <button v-for="entry in category.methods" :key="entry.code" class="lfx-pay-card" :class="{selected:method===entry.code,unavailable:entry.available===false}" :disabled="entry.available===false" :aria-pressed="method===entry.code" @click="method=entry.code">
@@ -108,10 +108,10 @@ function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:
                 <p class="lfx-pay-disclaimer">✧ Metode pembayaran dan biaya merupakan simulasi, tidak memproses transaksi.</p>
               </div>
             </section>
-            <section class="lfx-panel" id="lfx-voucher"><header class="lfx-panel-header"><span class="lfx-number">4</span><div><h2>Kode Voucher Diskon</h2><p>Gunakan voucher untuk potongan harga</p></div></header><div class="lfx-panel-content"><div class="lfx-voucher-input"><span>⌗</span><input v-model="voucherInput" placeholder="Masukkan kode voucher" aria-label="Kode voucher diskon" autocapitalize="characters" @keyup.enter="applyVoucher()"/><button @click="applyVoucher()">Gunakan</button></div><p v-if="error" class="lfx-error">{{error}}</p><div v-if="voucher" class="lfx-applied"><span>✓</span><div><strong>{{voucher}} berhasil dipakai</strong><small>Diskon {{money(discount)}}</small></div><button @click="voucher='';voucherInput='';error=''">Hapus</button></div><button class="lfx-voucher-browse" @click="voucherModal=true"><span>♧</span><strong>Lihat voucher yang tersedia</strong><b>→</b></button></div></section>
-            <section id="lfx-contact" class="lfx-panel"><header class="lfx-panel-header"><span class="lfx-number">5</span><div><h2>Detail Kontak</h2><p>Informasi status transaksi</p></div></header><div class="lfx-panel-content"><div class="lfx-field-grid"><label class="lfx-field"><span>Nomor WhatsApp <b>*</b></span><input v-model="whatsapp" type="tel" inputmode="tel" placeholder="081234567890"/></label><label class="lfx-field"><span>Email <em>(opsional)</em></span><input v-model="email" type="email" placeholder="nama@email.com"/></label></div><div class="lfx-hint"><span>i</span> Ini hanya preview, data tidak dikirim ke sistem transaksi.</div></div></section>
+            <section class="lfx-panel" id="lfx-voucher"><header class="lfx-panel-header"><span class="lfx-number">4</span><div><h2>Voucher Diskon</h2></div></header><div class="lfx-panel-content"><div class="lfx-voucher-input"><span>⌗</span><input v-model="voucherInput" placeholder="Masukkan kode voucher" aria-label="Kode voucher diskon" autocapitalize="characters" @keyup.enter="applyVoucher()"/><button @click="applyVoucher()">Gunakan</button></div><p v-if="error" class="lfx-error">{{error}}</p><div v-if="voucher" class="lfx-applied"><span>✓</span><div><strong>{{voucher}} berhasil dipakai</strong><small>Diskon {{money(discount)}}</small></div><button @click="voucher='';voucherInput='';error=''">Hapus</button></div><button class="lfx-voucher-browse" @click="voucherModal=true"><span>♧</span><strong>Lihat voucher yang tersedia</strong><b>→</b></button></div></section>
+            <section id="lfx-contact" class="lfx-panel"><header class="lfx-panel-header"><span class="lfx-number">5</span><div><h2>Detail Kontak</h2></div></header><div class="lfx-panel-content"><div class="lfx-field-grid"><label class="lfx-field"><span>Nomor WhatsApp <b>*</b></span><input v-model="whatsapp" type="tel" inputmode="tel" placeholder="081234567890"/></label><label class="lfx-field"><span>Email <em>(opsional)</em></span><input v-model="email" type="email" placeholder="nama@email.com"/></label></div><div class="lfx-hint"><span>i</span> Ini hanya preview, data tidak dikirim ke sistem transaksi.</div></div></section>
           </template>
-          <section v-else class="lfx-panel lfx-details"><header class="lfx-panel-header"><span class="lfx-number">i</span><div><h2>Keterangan {{product.name}}</h2><p>Informasi layanan</p></div></header><div class="lfx-panel-content"><p>{{product.description}}</p><h3>Cara top up</h3><ol><li>Masukkan data akun tujuan.</li><li>Pilih nominal yang diinginkan.</li><li>Pilih metode pembayaran.</li><li>Gunakan voucher diskon jika ada.</li><li>Isi kontak lalu tinjau pesanan.</li></ol></div></section>
+          <section v-else class="lfx-panel lfx-details"><header class="lfx-panel-header"><span class="lfx-number">i</span><div><h2>Keterangan {{product.name}}</h2></div></header><div class="lfx-panel-content"><p>{{product.description}}</p><h3>Cara top up</h3><ol><li>Masukkan data akun tujuan.</li><li>Pilih nominal yang diinginkan.</li><li>Pilih metode pembayaran.</li><li>Gunakan voucher diskon jika ada.</li><li>Isi kontak lalu tinjau pesanan.</li></ol></div></section>
           <section class="lfx-description-box"><div><span>✧</span><strong>Deskripsi {{product.name}}</strong></div><p>{{product.description}}</p></section>
         </div>
 
