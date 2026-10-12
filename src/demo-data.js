@@ -17,7 +17,7 @@ const channels = [
 ];
 function packages(rows) {
   return rows.map((entry, index) => ({
-    id: entry[0], name: entry[1], price_idr: entry[2], group_name: entry[3] || '',
+    id: entry[0], name: entry[1], price_idr: entry[2], group_name: '',
     is_available: true, image_url: null, sort_order: index + 1,
   }));
 }

@@ -6,6 +6,7 @@ import { installMockApi } from './mock-api.js';
 import '../rebuild/resources/css/app.css';
 import './premium.css';
 import './refinement.css';
+import './qa-fixes.css';
 import './preview.css';
 
 const current = ref('ml');
@@ -18,6 +19,11 @@ const Lab = defineComponent({
     window.addEventListener('lab:notice', (event) => { notice.value = String(event.detail || ''); });
     const demoPayment = location.pathname === '/payment';
     return () => h(Fragment, null, [
+      demoPayment ? h('main', { class: 'lab-payment' }, [
+        h('h1', 'Simulasi pesanan selesai'),
+        h('p', 'Ini hanya checkout dummy. Tidak ada pembayaran, order, atau backend asli.'),
+        h('a', { href: '/' }, 'Kembali ke preview checkout'),
+      ]) : h(CustomerShell, {}, { default: () => h(PremiumCheckout, { key: current.value, ...demos[current.value] }) }),
       h('details', {class:'lab-toolbar'},[
         h('summary','◈ LAB · DEMO'),
         h('div',{class:'lab-toolbar-body'},[
@@ -29,12 +35,7 @@ const Lab = defineComponent({
           h('a',{href:'/'},'Reset preview')
         ])
       ]),
-            demoPayment ? h('main', { class: 'lab-payment' }, [
-        h('h1', 'Simulasi pesanan selesai'),
-        h('p', 'Ini hanya checkout dummy. Tidak ada pembayaran, order, atau backend asli.'),
-        h('a', { href: '/' }, 'Kembali ke preview checkout'),
-      ]) : h(CustomerShell, {}, { default: () => h(PremiumCheckout, { key: current.value, ...demos[current.value] }) }),
-      notice.value ? h('div', { class: 'lab-notice', role: 'status', onClick: () => { notice.value = ''; } }, notice.value) : null,
+            notice.value ? h('div', { class: 'lab-notice', role: 'status', onClick: () => { notice.value = ''; } }, notice.value) : null,
     ]);
   },
 });

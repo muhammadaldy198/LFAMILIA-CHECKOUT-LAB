@@ -1,0 +1,367 @@
+/* LFAMILIA LAB QA FIXES — 2026-10-12
+   Corrected from actual user mobile/desktop-site screenshots.
+   Keep CustomerShell header/footer intact; selectors scoped to checkout only. */
+
+/* Ourastore uses a tilted product cover. Perspective is on the parent,
+   leaving the captured rotateY/rotateX and origin unchanged on the image. */
+.lfx .lfx-product-cover {
+  perspective: 760px;
+  perspective-origin: left center;
+  transform-style: preserve-3d;
+  isolation: isolate;
+  overflow: visible;
+  filter: none;
+  z-index: 3;
+}
+.lfx .lfx-cover-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: inherit;
+  perspective-origin: left center;
+  transform-style: preserve-3d;
+  overflow: visible;
+  isolation: isolate;
+}
+.lfx .lfx-cover-frame > img,
+.lfx .lfx-cover-frame > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  transform: rotateY(20deg) rotateX(-4deg);
+  transform-origin: left center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 17px 22px 30px -9px rgba(0,0,0,.82), 5px 9px 18px #0009;
+  outline: 1px solid rgba(208,226,255,.23);
+}
+.lfx .lfx-cover-frame > span {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg,#3867ba,#18294b);
+  color: #dce9ff;
+  font-weight: 900;
+  font-size: 30px;
+}
+.lfx .lfx-cover-frame::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 16px;
+  background: linear-gradient(108deg,rgba(255,255,255,.22),transparent 19%,transparent 76%,rgba(3,10,26,.25));
+  box-shadow: inset 3px 0 3px -2px #f1f7ff69, inset -5px 0 8px #0005;
+  transform: rotateY(20deg) rotateX(-4deg);
+  transform-origin: left center;
+}
+
+/* Rebuild nominal card sizing as a grid. The old flex + overflow:hidden
+   clipped the title at the top and pushed prices outside 85px cards. */
+.lfx .lfx-nominal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  grid-auto-rows: minmax(114px,auto);
+  align-items: stretch;
+  gap: 12px;
+  min-width: 0;
+}
+.lfx .lfx-nominal {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 114px;
+  max-height: none;
+  display: grid;
+  grid-template-rows: minmax(0,1fr) auto;
+  gap: 0;
+  padding: 13px 12px 10px;
+  text-align: left;
+  overflow: visible;
+  align-content: stretch;
+  justify-content: stretch;
+  border-radius: 12px;
+  background: linear-gradient(147deg,#2d394b 0%,#232d3d 85%);
+  border: 1px solid #aebdd02b;
+  box-shadow: 0 5px 12px #0003;
+}
+.lfx .lfx-nominal:hover {transform: none; border-color: #9fbbef8a}
+.lfx .lfx-nominal.selected {border-color: #b6e783;box-shadow: 0 0 0 1px #c8f66b27,0 5px 15px #0004}
+.lfx .lfx-nominal .lfx-nominal-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  gap: 5px;
+  padding-top: 1px;
+}
+.lfx .lfx-nominal .lfx-nominal-name {
+  display: block;
+  min-width: 0;
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+}
+.lfx .lfx-nominal .lfx-nominal-name strong {
+  display: block;
+  position: static;
+  min-width: 0;
+  max-width: 100%;
+  line-height: 1.35;
+  font-weight: 800;
+  font-size: 12px;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  color: #f2f6ff;
+}
+.lfx .lfx-nominal .lfx-diamond,
+.lfx .lfx-nominal .lfx-item-art {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  margin-right: 2px;
+}
+.lfx .lfx-nominal .lfx-nominal-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 5px;
+  width: 100%;
+  margin: 8px 0 0;
+  padding: 9px 0 0;
+  min-height: 29px;
+  height: auto;
+  border-top: 1px solid rgba(203,219,241,.17);
+  white-space: nowrap;
+}
+.lfx .lfx-nominal .lfx-nominal-bottom b {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1.25;
+  color: #f4f7ff;
+  overflow: visible;
+}
+.lfx .lfx-nominal .lfx-nominal-bottom small {font-size: 8px;flex: 0 0 auto}
+.lfx .lfx-nominal .lfx-check {z-index: 3;pointer-events:none}
+
+/* Section badges are ONE COLUMN of the header grid and fill its entire
+   height; they must never look like disconnected 43px squares. */
+.lfx .lfx-panel-header {
+  display: grid;
+  grid-template-columns: 53px minmax(0,1fr);
+  align-items: stretch;
+  gap: 0;
+  min-height: 60px;
+  padding: 0;
+  overflow: hidden;
+}
+.lfx .lfx-panel-header > .lfx-number {
+  width: 100%;
+  height: auto;
+  min-height: 60px;
+  flex: none;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: inset -1px 0 #ffffff13;
+}
+.lfx .lfx-panel-header > div {
+  align-self: center;
+  min-width: 0;
+  padding: 10px 15px;
+}
+.lfx .lfx-panel-header h2 {font-size: 14px;line-height: 1.35;margin: 0}
+.lfx .lfx-panel-header p {font-size: 10px;line-height: 1.35;margin: 4px 0 0}
+
+/* Oura-like accordion payment: standalone full-width coin row and
+   accordion categories, each with consistent 2-column method cards. */
+.lfx .lfx-pay-list {gap: 12px}
+.lfx .lfx-pay-group {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #a6b6cc29;
+  border-radius: 12px;
+  background: #1b232e;
+}
+.lfx .lfx-pay-group.coin {border-color: #91acd94b}
+.lfx .lfx-coin-row {
+  width: 100%;
+  min-height: 82px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+  background: linear-gradient(105deg,#303f52,#293443);
+  border: none;
+  padding: 12px 14px;
+  color: #eff4ff;
+}
+.lfx .lfx-coin-emblem {
+  display: grid;
+  place-items: center;
+  flex: 0 0 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #a7cdfd;
+  background: radial-gradient(circle at 27% 19%,#d8e7fb 0%,#6695d9 42%,#284a8b 75%);
+  box-shadow: 0 3px 11px #030d214f;
+  font-size: 16px;
+  font-weight: 950;
+  color: #133c6f;
+}
+.lfx .lfx-coin-description {display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 6px}
+.lfx .lfx-coin-description strong {font-size: 13px; font-weight: 850}
+.lfx .lfx-coin-description small {font-size: 10px; color: #aebed4}
+.lfx .lfx-coin-status {font-size: 10px;color:#d1e1ff}
+.lfx .lfx-coin-row .lfx-pay-radio {margin-left: 0}
+.lfx .lfx-pay-title {min-height: 55px; border-radius: 0; padding: 10px 12px; background:#29333f}
+.lfx .lfx-pay-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 11px;
+  padding: 13px;
+  background: #18212c;
+}
+.lfx .lfx-pay-grid > .lfx-pay-card:only-child {grid-column: 1 / -1}
+.lfx .lfx-pay-card {
+  width: 100%;
+  min-width: 0;
+  min-height: 123px;
+  height: auto;
+  display: grid;
+  align-content: start;
+  grid-template-columns: minmax(0,1fr) 17px;
+  grid-template-rows: 29px 1fr;
+  gap: 7px 4px;
+  padding: 13px 12px 11px;
+  text-align: left;
+  background: #353f4c;
+  border: 1px solid #a8b5c522;
+  border-radius: 11px;
+  color: #f2f6fd;
+}
+.lfx .lfx-pay-card.selected {background:#344b66;border-color:#99c0ff}
+.lfx .lfx-pay-card .lfx-pay-brand {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 40px;
+  width: fit-content;
+  max-width: 100%;
+  height: 29px;
+  padding: 0 8px;
+  flex: none;
+  font-size: 11px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.lfx .lfx-pay-card .lfx-pay-card-details {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 5px;
+}
+.lfx .lfx-pay-card .lfx-pay-name {
+  display: block;
+  flex: none;
+  font-size: 11px;
+  line-height: 1.35;
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+.lfx .lfx-pay-card .lfx-pay-price {
+  display: block;
+  font-size: 11px;
+  font-weight: 750;
+  color: #e5edf9;
+  line-height: 1.3;
+  padding-top: 2px;
+}
+.lfx .lfx-pay-card .lfx-pay-auto {
+  display: block;
+  font-size: 9px;
+  color: #b5c3d7;
+  font-style: italic;
+  padding-top: 6px;
+  border-top: 1px dotted #ffffff26;
+}
+.lfx .lfx-pay-card .lfx-pay-radio {grid-column:2;grid-row:1;justify-self:end;align-self:start;margin-left:0}
+.lfx .lfx-pay-group .lfx-pay-icons {gap: 4px;max-width:40%;overflow:hidden}
+.lfx .lfx-pay-icons > span {min-width: 22px}
+
+/* Mobile banner crops to the central artwork but retains title in frame.
+   Desktop keeps full artwork like Ourastore. */
+@media(max-width:1023px){
+  .lfx .lfx-hero img {object-position: 32% center}
+}
+@media(min-width:640px) and (max-width:767px){
+  .lfx .lfx-nominal-grid {grid-template-columns: repeat(3,minmax(0,1fr))}
+}
+@media(min-width:768px) and (max-width:1023px){
+  .lfx .lfx-nominal-grid {grid-template-columns: repeat(2,minmax(0,1fr))}
+}
+@media(min-width:1024px){
+  .lfx .lfx-nominal-grid {grid-template-columns: repeat(3,minmax(0,1fr))}
+  .lfx .lfx-hero img {object-position: center}
+}
+@media(max-width:767px){
+  .lfx .lfx-panel-header {grid-template-columns: 49px minmax(0,1fr);min-height: 57px}
+  .lfx .lfx-panel-header > .lfx-number {min-height: 57px}
+  .lfx .lfx-panel-header > div {padding: 9px 12px}
+  .lfx .lfx-panel-header h2 {font-size: 13px}
+  .lfx .lfx-panel-header p {font-size: 10px}
+  .lfx .lfx-nominal-grid {grid-template-columns: repeat(2,minmax(0,1fr));gap: 10px;grid-auto-rows:minmax(114px,auto)}
+  .lfx .lfx-nominal {min-height:114px;padding:12px 10px 10px}
+  .lfx .lfx-nominal .lfx-nominal-name strong {font-size: 11px}
+  .lfx .lfx-pay-grid {gap:9px;padding:10px}
+  .lfx .lfx-pay-card {min-height:120px;padding:11px 9px 10px}
+  .lfx .lfx-pay-card .lfx-pay-brand {font-size:10px;min-width:32px}
+}
+@media(min-width:640px) and (max-width:767px) {
+  .lfx .lfx-nominal-grid {grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:390px){
+  .lfx .lfx-nominal .lfx-nominal-name strong {font-size:10.5px}
+  .lfx .lfx-nominal .lfx-nominal-bottom b {font-size:11px}
+  .lfx .lfx-pay-card .lfx-pay-name {font-size:10px}
+  .lfx .lfx-coin-status {display:none}
+}
+
+/* Lab control lives after the original footer instead of floating over hero/cards. */
+.lab-toolbar {
+  position: static!important;
+  top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  z-index:1!important;
+  padding:0!important;
+  text-align:right;
+  background:#070d17!important;
+  border-top:1px solid #ffffff17!important;
+}
+.lab-toolbar > summary {
+  display:inline-block!important;
+  font-size:9px!important;
+  padding:6px 12px!important;
+  border-radius:6px!important;
+  margin:4px 12px!important;
+}
+.lab-toolbar-body {display:flex;max-width:290px;margin-left:auto;margin-right:12px;margin-bottom:10px}

@@ -49,7 +49,7 @@ function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:
   <main>
     <div class="lfx-hero"><img src="/lfamilia-hero.svg" alt="Banner top up LFAMILIA Store"/><span class="lfx-hero-overlay"></span><span class="lfx-hero-micro">LFAMILIA <b>✦</b> GAME TOP UP</span></div>
     <section class="lfx-product-header"><div class="lfx-container lfx-product-header-inner">
-      <div class="lfx-product-cover"><img v-if="product.image_url" :src="product.image_url" :alt="product.name"/><span v-else>LF</span></div>
+      <div class="lfx-product-cover"><div class="lfx-cover-frame"><img v-if="product.image_url" :src="product.image_url" :alt="product.name"/><span v-else>LF</span></div></div>
       <div class="lfx-product-intro"><div class="lfx-breadcrumb"><span>Beranda</span><span>›</span><span>Top Up Game</span><span>›</span><strong>{{product.name}}</strong></div><div class="lfx-overline">DIGITAL TOP UP · PREMIUM EXPERIENCE</div><h1>{{product.name}}</h1><p>{{product.publisher||'LFAMILIA STORE'}}</p></div><div class="lfx-trust"><span><b>⚡</b> Proses Cepat</span><span><b>✧</b> Layanan Chat 24/7</span><span><b>◷</b> Pembayaran Aman</span></div>
 
     </div></section>
@@ -68,7 +68,7 @@ function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:
                   <div class="lfx-nominal-grid">
                     <button v-for="item in itemsGroup.items" :key="item.id" class="lfx-nominal" :class="{selected:String(chosen)===String(item.id)}" :disabled="item.is_available===false" :aria-pressed="String(chosen)===String(item.id)" @click="chosen=item.id">
                       <span class="lfx-check">{{String(chosen)===String(item.id)?'✓':''}}</span>
-                      <span class="lfx-nominal-top"><span class="lfx-nominal-name"><strong>{{item.name}}</strong></span><img v-if="item.image_url" class="lfx-item-art" :src="item.image_url" alt="" loading="lazy"/><span v-else class="lfx-diamond">✦</span></span>
+                      <span class="lfx-nominal-top"><span class="lfx-nominal-name"><strong>{{item.name}}</strong></span><img v-if="item.image_url" class="lfx-item-art" :src="item.image_url" alt="" loading="lazy"/><span v-else class="lfx-diamond" aria-hidden="true">✦</span></span>
                       <span class="lfx-nominal-bottom"><b>{{money(item.price_idr)}}</b><small v-if="String(chosen)===String(item.id)">DIPILIH</small></span>
                     </button>
                   </div>
@@ -79,19 +79,30 @@ function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:
             <section id="lfx-payment" class="lfx-panel"><header class="lfx-panel-header"><span class="lfx-number">3</span><div><h2>Pilih Pembayaran</h2><p>Pilih metode pembayaran yang tersedia</p></div></header>
               <div class="lfx-panel-content">
                 <div class="lfx-pay-list">
-                  <section v-for="category in groupedPayments" :key="category.id" class="lfx-pay-group" :class="{selected:category.methods.some(x=>x.code===method)}">
-                    <button class="lfx-pay-title" :aria-expanded="expanded.includes(category.id)" @click="togglePayment(category.id)">
-                      <span class="lfx-pay-symbol" :class="{'lfx-coin-symbol':category.id==='wallet'}">{{category.symbol}}</span>
-                      <span class="lfx-pay-description"><strong>{{category.title}}</strong><small>{{category.subtitle}}</small></span>
-                      <span class="lfx-pay-icons"><span v-for="entry in category.methods.slice(0,3)" :key="entry.code">{{shortLogo(entry)}}</span></span>
-                      <span class="lfx-pay-chevron" :class="{open:expanded.includes(category.id)}">⌄</span>
-                    </button>
-                    <div v-if="expanded.includes(category.id)" class="lfx-pay-grid">
-                      <button v-for="entry in category.methods" :key="entry.code" class="lfx-pay-card" :class="{selected:method===entry.code,unavailable:entry.available===false}" :disabled="entry.available===false" :aria-pressed="method===entry.code" @click="method=entry.code">
-                        <span class="lfx-pay-brand" :class="'lfx-brand-'+entry.code">{{shortLogo(entry)}}</span><span class="lfx-pay-name">{{entry.name}}</span><span class="lfx-pay-radio">{{method===entry.code?'✓':''}}</span>
-                        <small v-if="entry.available===false" class="lfx-unavailable-label">Belum tersedia</small>
+                  <section v-for="category in groupedPayments" :key="category.id" class="lfx-pay-group" :class="{selected:category.methods.some(x=>x.code===method),coin:category.id==='wallet'}">
+                    <template v-if="category.id==='wallet'">
+                      <button class="lfx-coin-row" :aria-pressed="method===category.methods[0].code" :disabled="category.methods.every(entry=>entry.available===false)" @click="method=category.methods[0].code">
+                        <span class="lfx-coin-emblem">LF</span>
+                        <span class="lfx-coin-description"><strong>LFAMILIA Coin</strong><small>Gunakan saldo koin LFAMILIA</small></span>
+                        <span class="lfx-coin-status">{{method===category.methods[0].code?'Dipilih':'Pilih'}}</span>
+                        <span class="lfx-pay-radio">{{method===category.methods[0].code?'✓':''}}</span>
                       </button>
-                    </div>
+                    </template>
+                    <template v-else>
+                      <button class="lfx-pay-title" :aria-expanded="expanded.includes(category.id)" @click="togglePayment(category.id)">
+                        <span class="lfx-pay-symbol">{{category.symbol}}</span>
+                        <span class="lfx-pay-description"><strong>{{category.title}}</strong><small>{{category.subtitle}}</small></span>
+                        <span class="lfx-pay-icons"><span v-for="entry in category.methods.slice(0,4)" :key="entry.code">{{shortLogo(entry)}}</span></span>
+                        <span class="lfx-pay-chevron" :class="{open:expanded.includes(category.id)}">⌄</span>
+                      </button>
+                      <div v-if="expanded.includes(category.id)" class="lfx-pay-grid" :class="{'lfx-pay-grid-va':category.id==='va'}">
+                        <button v-for="entry in category.methods" :key="entry.code" class="lfx-pay-card" :class="{selected:method===entry.code,unavailable:entry.available===false}" :disabled="entry.available===false" :aria-pressed="method===entry.code" @click="method=entry.code">
+                          <span class="lfx-pay-brand" :class="'lfx-brand-'+entry.code">{{shortLogo(entry)}}</span>
+                          <span class="lfx-pay-card-details"><strong class="lfx-pay-name">{{entry.name}}</strong><span class="lfx-pay-price">{{selected?money(price+(entry.group==='va'?4000:entry.group==='ewallet'?1000:entry.group==='qris'?Math.ceil(price*.007):0)):'Pilih nominal dahulu'}}</span><small class="lfx-pay-auto">Proses Otomatis</small></span>
+                          <span class="lfx-pay-radio">{{method===entry.code?'✓':''}}</span>
+                        </button>
+                      </div>
+                    </template>
                   </section>
                 </div>
                 <p class="lfx-pay-disclaimer">✧ Metode pembayaran dan biaya merupakan simulasi, tidak memproses transaksi.</p>
@@ -100,7 +111,7 @@ function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:
             <section class="lfx-panel" id="lfx-voucher"><header class="lfx-panel-header"><span class="lfx-number">4</span><div><h2>Kode Voucher Diskon</h2><p>Gunakan voucher untuk potongan harga</p></div></header><div class="lfx-panel-content"><div class="lfx-voucher-input"><span>⌗</span><input v-model="voucherInput" placeholder="Masukkan kode voucher" aria-label="Kode voucher diskon" autocapitalize="characters" @keyup.enter="applyVoucher()"/><button @click="applyVoucher()">Gunakan</button></div><p v-if="error" class="lfx-error">{{error}}</p><div v-if="voucher" class="lfx-applied"><span>✓</span><div><strong>{{voucher}} berhasil dipakai</strong><small>Diskon {{money(discount)}}</small></div><button @click="voucher='';voucherInput='';error=''">Hapus</button></div><button class="lfx-voucher-browse" @click="voucherModal=true"><span>♧</span><strong>Lihat voucher yang tersedia</strong><b>→</b></button></div></section>
             <section id="lfx-contact" class="lfx-panel"><header class="lfx-panel-header"><span class="lfx-number">5</span><div><h2>Detail Kontak</h2><p>Informasi status transaksi</p></div></header><div class="lfx-panel-content"><div class="lfx-field-grid"><label class="lfx-field"><span>Nomor WhatsApp <b>*</b></span><input v-model="whatsapp" type="tel" inputmode="tel" placeholder="081234567890"/></label><label class="lfx-field"><span>Email <em>(opsional)</em></span><input v-model="email" type="email" placeholder="nama@email.com"/></label></div><div class="lfx-hint"><span>i</span> Ini hanya preview, data tidak dikirim ke sistem transaksi.</div></div></section>
           </template>
-          <section v-else class="lfx-panel lfx-details"><header class="lfx-panel-header"><span class="lfx-number">i</span><div><h2>Keterangan {{product.name}}</h2><p>Informasi layanan</p></div></header><div class="lfx-panel-content"><p>{{product.description}}</p><h3>Cara top up</h3><ol><li>Masukkan data akun tujuan.</li><li>Pilih nominal dan jumlah.</li><li>Pilih metode pembayaran.</li><li>Gunakan voucher diskon jika ada.</li><li>Isi kontak lalu tinjau pesanan.</li></ol></div></section>
+          <section v-else class="lfx-panel lfx-details"><header class="lfx-panel-header"><span class="lfx-number">i</span><div><h2>Keterangan {{product.name}}</h2><p>Informasi layanan</p></div></header><div class="lfx-panel-content"><p>{{product.description}}</p><h3>Cara top up</h3><ol><li>Masukkan data akun tujuan.</li><li>Pilih nominal yang diinginkan.</li><li>Pilih metode pembayaran.</li><li>Gunakan voucher diskon jika ada.</li><li>Isi kontak lalu tinjau pesanan.</li></ol></div></section>
           <section class="lfx-description-box"><div><span>✧</span><strong>Deskripsi {{product.name}}</strong></div><p>{{product.description}}</p></section>
         </div>
 
