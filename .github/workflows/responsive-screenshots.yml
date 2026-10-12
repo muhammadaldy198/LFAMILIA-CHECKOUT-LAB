@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/responsive-screenshots.yml'
+      - 'scripts/capture-responsive.mjs'
 
 permissions:
   contents: read

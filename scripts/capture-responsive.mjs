@@ -61,15 +61,34 @@ try {
         checkoutMain: box('.lfx-sections'),
         payment: box('#lfx-payment'),
         sidebar: box('.lfx-aside'),
-        stickyMobile: box('.lfx-sticky-mobile'),
+        bottomBar: box('.lfx-bottom-bar'),
+        bottomSummary: box('.lfx-bottom-summary'),
+        bottomAction: box('.lfx-bottom-pay'),
+        bottomBarPosition: getComputedStyle(document.querySelector('.lfx-bottom-bar')).position,
+        fullWidthMain: Math.abs((box('.lfx-sections')?.width ?? 0) - (box('.lfx-layout')?.width ?? 0)) < 4,
         coverSquare: cover ? Math.abs(cover.getBoundingClientRect().width - cover.getBoundingClientRect().height) < 2 : null,
       };
     });
     const basename = `${String(width)}x${String(height)}-${label}`;
     await page.screenshot({ path: path.join(output, basename + '-full.png'), fullPage: true, animations: 'disabled' });
     await page.screenshot({ path: path.join(output, basename + '-viewport.png'), fullPage: false, animations: 'disabled' });
-    records.push({ label, width, height, status: response?.status(), pageTitle: await page.title(), ...metrics, javascriptErrors: errors });
-    console.log(JSON.stringify({ label, width, height, status: response?.status(), horizontalOverflow: metrics.horizontalOverflow, coverSquare: metrics.coverSquare, hero: metrics.hero }));
+    // Actual DOM interaction: select a demo nominal, open the unified order overview.
+    await page.locator('.lfx-nominal[role="radio"]:not([aria-disabled="true"])').first().click();
+    await page.locator('.lfx-bottom-summary').click();
+    const review = page.getByRole('dialog', { name: 'Ringkasan Pesanan' });
+    await review.waitFor({ state: 'visible', timeout: 5000 });
+    const modalShowsTotal = await review.getByText('Total Pembayaran').isVisible();
+    await page.screenshot({ path: path.join(output, basename + '-order-summary.png'), fullPage: false, animations: 'disabled' });
+    await review.getByRole('button', { name: 'Tutup ringkasan' }).click();
+    await review.waitFor({ state: 'hidden', timeout: 5000 });
+    const summaryDismissed = await page.locator('[aria-modal="true"]').count() === 0;
+    const screen = metrics.bottomBar;
+    const bottomBarFixedToViewport = screen && Math.abs((screen.y + screen.height) - height) <= 2;
+    const sidebarAbsent = await page.locator('.lfx-aside').count() === 0;
+    records.push({ label, width, height, status: response?.status(), pageTitle: await page.title(), ...metrics, modalShowsTotal, summaryDismissed, bottomBarFixedToViewport, sidebarAbsent, javascriptErrors: errors });
+    console.log(JSON.stringify({ label, width, height, status: response?.status(), horizontalOverflow: metrics.horizontalOverflow,
+      fullWidthMain: metrics.fullWidthMain, sidebarAbsent, bottomBarFixedToViewport,
+      modalShowsTotal, summaryDismissed, coverSquare: metrics.coverSquare }));
     await page.close();
   }
 } finally {
@@ -77,4 +96,12 @@ try {
 }
 await fs.writeFile(path.join(output, 'viewport-audit.json'), JSON.stringify({ url, capturedAt: new Date().toISOString(), records }, null, 2));
 console.log('Captured', records.length, 'viewport sizes');
-if (records.some(r => r.status !== 200 || r.horizontalOverflow || r.javascriptErrors.length)) process.exitCode = 1;
+const failures = records.filter(r => r.status !== 200 ||
+  r.horizontalOverflow || r.javascriptErrors.length ||
+  r.sidebar || !r.sidebarAbsent || !r.fullWidthMain ||
+  r.bottomBarPosition !== 'fixed' || !r.bottomBarFixedToViewport ||
+  !r.modalShowsTotal || !r.summaryDismissed || !r.coverSquare);
+if (failures.length) {
+  console.error('Responsive test failures:', JSON.stringify(failures, null, 2));
+  process.exitCode = 1;
+}
