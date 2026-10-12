@@ -92,7 +92,7 @@ function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:
                       <button class="lfx-pay-title" :aria-expanded="expanded.includes(category.id)" @click="togglePayment(category.id)">
                         <span class="lfx-pay-symbol">{{category.symbol}}</span>
                         <span class="lfx-pay-description"><strong>{{category.title}}</strong></span>
-                        <span class="lfx-pay-icons"><span v-for="entry in category.methods.slice(0,4)" :key="entry.code">{{shortLogo(entry)}}</span></span>
+                        <span class="lfx-pay-count">{{category.methods.length}} metode</span>
                         <span class="lfx-pay-chevron" :class="{open:expanded.includes(category.id)}" aria-hidden="true"></span>
                       </button>
                       <div v-if="expanded.includes(category.id)" class="lfx-pay-grid" :class="{'lfx-pay-grid-va':category.id==='va'}">

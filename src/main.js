@@ -6,7 +6,6 @@ import { installMockApi } from './mock-api.js';
 import '../rebuild/resources/css/app.css';
 import './premium.css';
 import './refinement.css';
-import './qa-fixes.css';
 import './preview.css';
 
 const current = ref('ml');
