@@ -1,8 +1,9 @@
 import { createApp, defineComponent, h, ref, Fragment } from 'vue';
-import Checkout from '../rebuild/resources/js/Pages/Catalog/Show.vue';
+import PremiumCheckout from './PremiumCheckout.vue';
 import { demos } from './demo-data.js';
 import { installMockApi } from './mock-api.js';
 import '../rebuild/resources/css/app.css';
+import './premium.css';
 import './preview.css';
 
 const current = ref('ml');
@@ -33,10 +34,9 @@ const Lab = defineComponent({
         h('h1', 'Simulasi pesanan selesai'),
         h('p', 'Ini hanya checkout dummy. Tidak ada pembayaran, order, atau backend asli.'),
         h('a', { href: '/' }, 'Kembali ke preview checkout'),
-      ]) : h(Checkout, { key: current.value, ...demos[current.value] }),
+      ]) : h(PremiumCheckout, { key: current.value, ...demos[current.value] }),
       notice.value ? h('div', { class: 'lab-notice', role: 'status', onClick: () => { notice.value = ''; } }, notice.value) : null,
     ]);
   },
 });
-
 createApp(Lab).mount('#app');
