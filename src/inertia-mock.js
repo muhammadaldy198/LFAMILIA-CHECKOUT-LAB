@@ -5,7 +5,10 @@ const page = reactive({
   props: {
     auth: { user: null },
     storefront: {
-      supportWhatsapp: '', supportEmail: '', assets: {},
+      supportWhatsapp: '', supportEmail: '', assets: {
+        footer_banner_desktop: { url: 'https://raw.githubusercontent.com/muhammadaldy198/LFAMILIA-STORE/main/rebuild/public/brand/lfamilia-footer-desktop-wordmark.jpg' },
+        footer_banner_mobile: { url: 'https://raw.githubusercontent.com/muhammadaldy198/LFAMILIA-STORE/main/rebuild/public/brand/lfamilia-footer-mobile-wordmark.jpg' },
+      },
       presentation: { sections: {}, text: {}, typography: {} },
     },
   },

@@ -13,7 +13,7 @@ const channels = [
   { code: 'gopay', name: 'GoPay', group: 'ewallet', available: true },
   { code: 'bca_va', name: 'BCA Virtual Account', group: 'va', available: true },
   { code: 'bni_va', name: 'BNI Virtual Account', group: 'va', available: true },
-  { code: 'wallet', name: 'LFAMILIA Cash', group: 'wallet', available: false },
+  { code: 'wallet', name: 'LFAMILIA Coin', group: 'wallet', available: true },
 ];
 function packages(rows) {
   return rows.map((entry, index) => ({
@@ -36,14 +36,14 @@ export const demos = {
     description: 'Simulasi checkout untuk desain. Tidak ada transaksi nyata.',
     nickname_check_enabled: true, package_tabs_enabled: false,
   }, packages([
-    [101, '5 Diamonds', 1500, 'Diamonds'],
+    [101, '5 Diamonds', 1500],
     [102, '12 Diamonds', 3500, 'Diamonds'],
     [103, '28 Diamonds', 7800, 'Diamonds'],
     [104, '56 Diamonds', 14800, 'Diamonds'],
     [105, '86 Diamonds', 22900, 'Diamonds'],
     [106, '172 Diamonds', 44500, 'Diamonds'],
     [107, '257 Diamonds', 65300, 'Diamonds'],
-    [108, 'Weekly Diamond Pass', 28300, 'Pass'],
+    [108, 'Weekly Diamond Pass', 28300],
   ]), [
     { field_key: 'user_id', label: 'User ID', type: 'text', placeholder: 'Contoh: 12345678', is_required: true },
     { field_key: 'zone_id', label: 'Zone ID', type: 'text', placeholder: 'Contoh: 1234', is_required: true },
@@ -58,7 +58,7 @@ export const demos = {
     [201, '5 Diamonds', 1200, 'Diamonds'], [202, '12 Diamonds', 2800, 'Diamonds'],
     [203, '50 Diamonds', 8900, 'Diamonds'], [204, '100 Diamonds', 16500, 'Diamonds'],
     [205, '210 Diamonds', 32900, 'Diamonds'], [206, '355 Diamonds', 55000, 'Diamonds'],
-    [207, 'Membership Mingguan', 27000, 'Membership'], [208, 'Membership Bulanan', 83000, 'Membership'],
+    [207, 'Membership Mingguan', 27000], [208, 'Membership Bulanan', 83000, 'Membership'],
   ]), [
     { field_key: 'user_id', label: 'Player ID', type: 'text', placeholder: 'Masukkan Player ID', is_required: true },
   ]),

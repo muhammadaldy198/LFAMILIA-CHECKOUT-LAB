@@ -1,9 +1,11 @@
 import { createApp, defineComponent, h, ref, Fragment } from 'vue';
 import PremiumCheckout from './PremiumCheckout.vue';
+import CustomerShell from '../rebuild/resources/js/Components/CustomerShell.vue';
 import { demos } from './demo-data.js';
 import { installMockApi } from './mock-api.js';
 import '../rebuild/resources/css/app.css';
 import './premium.css';
+import './refinement.css';
 import './preview.css';
 
 const current = ref('ml');
@@ -16,25 +18,22 @@ const Lab = defineComponent({
     window.addEventListener('lab:notice', (event) => { notice.value = String(event.detail || ''); });
     const demoPayment = location.pathname === '/payment';
     return () => h(Fragment, null, [
-      h('div', { class: 'lab-toolbar' }, [
-        h('strong', 'LFAMILIA CHECKOUT LAB'),
-        h('span', { class: 'lab-indicator' }, 'DUMMY • TANPA TRANSAKSI'),
-        h('label', 'Produk contoh:'),
-        h('select', {
-          value: current.value,
-          onChange: (event) => { current.value = event.target.value; },
-          'aria-label': 'Pilih produk contoh',
-        }, [
-          h('option', { value: 'ml' }, 'Mobile Legends'),
-          h('option', { value: 'ff' }, 'Free Fire'),
-        ]),
-        h('a', { href: '/', class: 'lab-reset' }, 'Ulang'),
+      h('details', {class:'lab-toolbar'},[
+        h('summary','◈ LAB · DEMO'),
+        h('div',{class:'lab-toolbar-body'},[
+          h('strong','LFAMILIA CHECKOUT LAB'),
+          h('span',{class:'lab-indicator'},'DATA DUMMY · TIDAK ADA TRANSAKSI'),
+          h('select',{value:current.value,onChange:event=>{current.value=event.target.value},'aria-label':'Pilih produk demo'},[
+            h('option',{value:'ml'},'Mobile Legends'),h('option',{value:'ff'},'Free Fire')
+          ]),
+          h('a',{href:'/'},'Reset preview')
+        ])
       ]),
-      demoPayment ? h('main', { class: 'lab-payment' }, [
+            demoPayment ? h('main', { class: 'lab-payment' }, [
         h('h1', 'Simulasi pesanan selesai'),
         h('p', 'Ini hanya checkout dummy. Tidak ada pembayaran, order, atau backend asli.'),
         h('a', { href: '/' }, 'Kembali ke preview checkout'),
-      ]) : h(PremiumCheckout, { key: current.value, ...demos[current.value] }),
+      ]) : h(CustomerShell, {}, { default: () => h(PremiumCheckout, { key: current.value, ...demos[current.value] }) }),
       notice.value ? h('div', { class: 'lab-notice', role: 'status', onClick: () => { notice.value = ''; } }, notice.value) : null,
     ]);
   },
