@@ -115,3 +115,15 @@ function choosePayment(code) {
                         </div>
                     </div>
 </template>
+
+<!-- LFAMILIA Coin sizing lives next to the ported payment component.
+     The original storefront CSS sets wallet art to 32px !important.
+     Scope this override to the lab component; do not edit global CSS. -->
+<style scoped>
+.lf-payment-wallet-art {
+  width: 48px !important;
+  height: 48px !important;
+  flex: 0 0 48px !important;
+  border-radius: 11px !important;
+}
+</style>
