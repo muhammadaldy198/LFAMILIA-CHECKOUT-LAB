@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-@import './admin.css';
 @source '../js/**/*.vue';
 
 :root{--lime:#b9ff35;--lime2:#cfff72;--ink:#0b1320;--panel:#0d1019;--blue:#1769e8}

@@ -4,7 +4,6 @@
 .lab-toolbar label{margin-left:auto;color:#cbd5e1}
 .lab-toolbar select{max-width:175px;padding:7px 9px;border:1px solid #64748b;border-radius:7px;background:#0f172a;color:white}
 .lab-indicator{padding:4px 8px;border:1px solid #b9ff3545;border-radius:50px;color:#c5f893;font-size:10px}
-.lab-reset{color:#fff;text-decoration:underline}
 .lab-payment{min-height:78vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;padding:24px;background:#0c1625;color:#fff;text-align:center}
 .lab-payment h1{font-size:24px;font-weight:800}
 .lab-payment p{max-width:460px;color:#d5d9e1}

@@ -41,4 +41,3 @@ export const Link = defineComponent({
   },
 });
 
-export const router = { reload: () => undefined, visit: () => undefined, get: () => undefined, post: () => undefined };

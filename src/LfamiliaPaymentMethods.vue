@@ -51,7 +51,6 @@ const paymentGroups = computed(() => {
 });
 const hasExternalPaymentOption = computed(() => paymentGroups.value.some(group =>
   group.key !== 'wallet' && group.items.some(item => item.available !== false)));
-const hasWalletPaymentOption = computed(() => paymentGroups.value.some(group => group.key === 'wallet'));
 const hasAvailableWalletPaymentOption = computed(() => paymentGroups.value.some(group =>
   group.key === 'wallet' && group.items.some(item => item.available !== false)));
 

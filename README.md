@@ -1,39 +1,33 @@
 # LFAMILIA CHECKOUT LAB
 
-Sandbox **halaman checkout customer saja**. Tidak terhubung ke website production.
+Sandbox **tampilan checkout customer saja**, tanpa koneksi transaksi atau backend production.
 
-## Sumber kode
-Checkout dan styling disalin apa adanya dari repo muhammadaldy198/LFAMILIA-STORE branch main pada 12 Oktober 2026.
-Halaman checkout asli berada di rebuild/resources/js/Pages/Catalog/Show.vue.
-Komponen CustomerShell.vue, customerPresentation.js, app.css dan admin.css juga disalin dari main.
-Tidak menggunakan perubahan checkout dari PR lama.
+Preview Vercel: https://lfamilia-checkout-lab.vercel.app
 
-## Stack
-Vue 3 + Tailwind CSS 4 + Vite 7, sama dengan stack frontend LFAMILIA STORE. Backend Laravel + Inertia asli tidak dijalankan di preview; modul src/inertia-mock.js hanya dipakai untuk adapter sementara.
+## Source aktif
+- `src/PremiumCheckout.vue`: layout dan interaksi checkout simulasi
+- `src/LfamiliaPaymentMethods.vue`: pilihan pembayaran menggunakan pola dari LFAMILIA STORE
+- `src/LabVoucherModal.vue`: popup voucher dummy
+- `src/lab-pricing.js`: perhitungan harga, biaya, dan diskon simulasi
+- `src/demo-data.js`: produk dan metode pembayaran dummy
+- `src/main.js`, `src/inertia-mock.js`, `src/mock-api.js`: entry point, adapter CustomerShell, dan pengaman endpoint pembayaran
+- `src/premium.css`, `src/refinement.css`, `src/preview.css`: gaya khusus Checkout Lab
+- `rebuild/resources/js/Components/CustomerShell.vue` dan composable: header/footer asli
+- `rebuild/resources/css/app.css`: CSS customer asli untuk shell dan komponen pembayaran (bukan CSS admin)
 
-## Menjalankan secara lokal
-1. Jalankan npm install
-2. Jalankan npm run dev
-3. Buka alamat Vite yang tampil (biasanya http://localhost:5173)
+## Referensi checkout production
+https://github.com/muhammadaldy198/LFAMILIA-STORE/blob/main/rebuild/resources/js/Pages/Catalog/Show.vue
 
-## Cloudflare Pages
-Buat proyek Cloudflare Pages terpisah dari production dan tautkan repo LFAMILIA-CHECKOUT-LAB:
-- Branch: main
-- Build command: npm run build
-- Build output: dist
-- Root directory: / (default)
+Copy `Show.vue` dari repo utama **tidak di-import** di lab, maka copy itu dibersihkan. CSS admin dan `qa-fixes.css` yang tidak dimuat juga dibuang. Riwayat lama tetap ada di Git.
 
-Cloudflare memberi URL subdomain *.pages.dev setelah deployment sukses. Repo ini belum memiliki URL preview otomatis sebelum Pages terhubung.
+## Development
+1. `npm install`
+2. `npm run dev`
+3. `npm run build` untuk build Vite; hasil di `dist/`
 
-## Batasan dummy
-- Semua produk, harga, ongkos pembayaran, voucher, nickname, dan invoice adalah contoh buatan untuk desain UI.
-- Simulator mencegat endpoint checkout/pembayaran agar tidak memanggil backend asli.
-- Tidak ada API key, credential, webhook, database, pembayaran, login, atau transaksi sungguhan.
-- Tombol navigasi yang menuju halaman lain dinonaktifkan karena scope hanya checkout.
+Stack: Vue 3, Vite 7, Tailwind CSS 4. GitHub `main` di lab terhubung ke Vercel.
 
-## Cara membawa hasil kembali ke repo utama
-1. Desain/revisi pada source checkout & CSS di rebuild/resources.
-2. Bila disetujui, buat branch baru dari main terbaru di LFAMILIA-STORE.
-3. Port hanya perubahan source yang diperlukan. Jangan port src/, index.html, vite.config.js, package.json, atau data dummy.
-4. Jalankan CI lengkap serta pengujian integrasi harga/payment di repo utama sebelum PR/merge.
-5. Jangan mengubah backend, seller, SKU, harga riil, Digiflazz, Midtrans, atau VPS melalui repo lab.
+## Batasan
+Semua nominal, diskon voucher, fee, dan order adalah **simulasi frontend**. Tidak ada transaksi sungguhan. `mock-api.js` sengaja dipertahankan untuk mencegat endpoint checkout/pembayaran; jangan menghapus pengaman ini.
+
+Bila tampilan disetujui, port **hanya perubahan UI yang relevan** ke branch baru berdasarkan LFAMILIA-STORE/main terbaru. Jangan port data dummy, mock, atau pengaturan Vercel. Validasi dan CI production harus dilakukan terpisah.
