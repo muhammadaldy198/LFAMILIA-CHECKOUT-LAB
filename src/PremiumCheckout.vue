@@ -96,10 +96,9 @@ function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:
                         <span class="lfx-pay-chevron" :class="{open:expanded.includes(category.id)}" aria-hidden="true"></span>
                       </button>
                       <div v-if="expanded.includes(category.id)" class="lfx-pay-grid" :class="{'lfx-pay-grid-va':category.id==='va'}">
-                        <button v-for="entry in category.methods" :key="entry.code" class="lfx-pay-card" :class="{selected:method===entry.code,unavailable:entry.available===false}" :disabled="entry.available===false" :aria-pressed="method===entry.code" @click="method=entry.code">
-                          <span class="lfx-pay-brand" :class="'lfx-brand-'+entry.code">{{shortLogo(entry)}}</span>
-                          <span class="lfx-pay-card-details"><strong class="lfx-pay-name">{{entry.name}}</strong><span class="lfx-pay-price">{{selected?money(price+(entry.group==='va'?4000:entry.group==='ewallet'?1000:entry.group==='qris'?Math.ceil(price*.007):0)):'Pilih nominal dahulu'}}</span><small class="lfx-pay-auto">Proses Otomatis</small></span>
-                          <span class="lfx-pay-radio">{{method===entry.code?'✓':''}}</span>
+                        <button v-for="entry in category.methods" :key="entry.code" type="button" class="lfx-pay-card" :class="{selected:method===entry.code,unavailable:entry.available===false}" :disabled="entry.available===false" :aria-pressed="method===entry.code" @click="method=entry.code">
+                          <span class="lfx-method-top"><span class="lfx-pay-brand" :class="'lfx-brand-'+entry.code">{{shortLogo(entry)}}</span><span class="lfx-pay-radio">{{method===entry.code?'✓':''}}</span></span>
+                          <span class="lfx-method-body"><strong class="lfx-pay-name">{{entry.name}}</strong><span class="lfx-pay-price">{{selected?money(price+(entry.group==='va'?4000:entry.group==='ewallet'?1000:entry.group==='qris'?Math.ceil(price*.007):0)):'Pilih nominal dahulu'}}</span><small class="lfx-pay-auto">Proses Otomatis</small></span>
                         </button>
                       </div>
                     </template>

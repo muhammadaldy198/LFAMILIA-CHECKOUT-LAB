@@ -110,160 +110,6 @@
 .lfx .lfx-cover-frame>span{display:grid;place-items:center;background:linear-gradient(140deg,#3459a3,#162646);color:#f1f7ff}
 .lfx .lfx-cover-frame::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:16px;background:linear-gradient(107deg,#ffffff25,transparent 21%,transparent 82%,#0005);box-shadow:inset 3px 0 4px -2px #ffffff6a;transform:rotateY(20deg) rotateX(-4deg);transform-origin:left center}
 
-/* 1. Compact numbered section headers; number tile grows with header. */
-.lfx .lfx-panel-header{
- display:grid;grid-template-columns:40px minmax(0,1fr);align-items:stretch;
- gap:0;margin:0;padding:0;min-height:42px;overflow:hidden;
- background:linear-gradient(100deg,#2d3848,#2a3442);border-bottom:1px solid #ffffff13;
-}
-.lfx .lfx-panel-header>.lfx-number{
- display:grid;place-items:center;width:40px;height:100%;min-height:42px;
- margin:0;padding:0;border:0;border-radius:0;background:linear-gradient(130deg,#477dcd,#3864ad);
- box-shadow:inset -1px 0 #ffffff21;font-size:14px;font-weight:900;line-height:1;
-}
-.lfx .lfx-panel-header>div{min-width:0;align-self:stretch;display:flex;align-items:center;padding:7px 13px}
-.lfx .lfx-panel-header h2{margin:0;font-size:13px;line-height:1.3;font-weight:800;color:#f2f6ff}
-.lfx .lfx-panel-header p{display:none}
-
-/* 2. Restore the original nominal card feel, without ANY fixed grid track
-      height or max-height clamp. Cards may grow for long item names. */
-.lfx .lfx-nominal-group+.lfx-nominal-group{margin-top:18px}
-.lfx .lfx-nominal-group:not(:first-child) .lfx-subtitle{margin-top:0}
-.lfx .lfx-nominal-grid{
- display:grid;width:100%;height:auto;min-width:0;
- grid-template-columns:repeat(2,minmax(0,1fr));
- grid-template-rows:none;grid-auto-rows:auto;grid-auto-flow:row;
- justify-content:stretch;justify-items:stretch;align-content:start;align-items:stretch;
- gap:11px;
-}
-.lfx .lfx-nominal-grid>.lfx-nominal{
- position:relative;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;
- align-self:stretch;min-width:0;width:100%;min-height:105px;max-height:none;height:auto;
- margin:0;padding:12px 11px 9px;overflow:hidden;text-align:left;
- border:1px solid #adbed335;border-radius:11px;color:#f1f6ff;
- background:linear-gradient(150deg,#2d3c54,#202e44 80%);box-shadow:0 4px 12px #0003;
- transition:background .17s,border-color .17s;
-}
-.lfx .lfx-nominal-grid>.lfx-nominal:hover{transform:none;border-color:#82aefa8a}
-.lfx .lfx-nominal-grid>.lfx-nominal.selected{
- border-color:#b9e687;background:linear-gradient(155deg,#2c4452,#213844);
- box-shadow:inset 0 0 0 1px #b4ed7e36,0 4px 14px #0004;
-}
-.lfx .lfx-nominal .lfx-nominal-top{
- display:flex;align-items:flex-start;justify-content:space-between;flex:1 1 auto;
- gap:7px;min-width:0;min-height:0;width:100%;height:auto;padding:0;margin:0;
-}
-.lfx .lfx-nominal .lfx-nominal-name{min-width:0;flex:1;display:block;overflow:visible}
-.lfx .lfx-nominal .lfx-nominal-name strong{
- display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;
- max-height:none;white-space:normal;overflow:hidden;overflow-wrap:anywhere;
- line-height:1.38;font-size:11px;font-weight:850;color:#f2f7ff;
-}
-.lfx .lfx-nominal .lfx-diamond{flex:0 0 auto;font-size:22px;line-height:1;color:#79b5ff;margin:1px 3px 0 0}
-.lfx .lfx-nominal:nth-child(4n) .lfx-diamond{color:#b0a0fa}
-.lfx .lfx-nominal .lfx-item-art{width:29px;height:29px;flex:0 0 29px;object-fit:contain;border-radius:6px}
-.lfx .lfx-nominal .lfx-nominal-bottom{
- box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;
- flex:0 0 auto;width:100%;min-width:0;min-height:29px;height:auto;
- margin:8px 0 0;padding:8px 0 0;border-top:1px solid #ffffff20;gap:6px;
-}
-.lfx .lfx-nominal .lfx-nominal-bottom b{font-size:12px;font-weight:850;line-height:1.35;white-space:nowrap;color:#f2f6ff}
-.lfx .lfx-nominal .lfx-nominal-bottom small{font-size:8px;font-weight:900;color:#cbf497;white-space:nowrap}
-.lfx .lfx-nominal .lfx-check{z-index:2;pointer-events:none}
-
-/* 3. Payment: ONE full-width row per category. No mini-logo placeholders.
-      Expand category -> consistent 2-column method grid BELOW its own row. */
-.lfx .lfx-pay-list{display:flex;flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:10px;width:100%}
-.lfx .lfx-pay-group{
- display:block;width:100%;max-width:100%;min-width:0;overflow:hidden;
- border:1px solid #9aaec737;border-radius:11px;background:#18222f;
-}
-.lfx .lfx-pay-group.selected{border-color:#8bb8f899}
-.lfx .lfx-pay-group.coin{background:#202c3b;border-color:#89a9da55}
-.lfx .lfx-coin-row{
- display:flex;align-items:center;gap:11px;width:100%;min-height:61px;
- padding:9px 12px;border:0;text-align:left;color:#f0f6ff;
- background:linear-gradient(100deg,#33445b,#2b3b50);
-}
-.lfx .lfx-coin-emblem{
- flex:0 0 39px;display:grid;place-items:center;width:39px;height:39px;
- border-radius:50%;border:2px solid #b6d5fd;
- background:radial-gradient(circle at 25% 20%,#d7e7ff,#6693d6 53%,#284d85);
- box-shadow:0 3px 10px #06102475;color:#173b69;font-weight:900;font-size:13px;
-}
-.lfx .lfx-coin-description{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
-.lfx .lfx-coin-description strong{font-size:12px;font-weight:850;line-height:1.3}
-.lfx .lfx-coin-description small{font-size:10px;color:#b3c6de;line-height:1.35}
-.lfx .lfx-coin-status{font-size:10px;color:#c5d8f6}
-.lfx .lfx-coin-row .lfx-pay-radio{margin:0}
-.lfx .lfx-pay-title{
- box-sizing:border-box;display:flex;align-items:center;gap:11px;
- width:100%;min-height:51px;height:auto;padding:9px 11px;margin:0;
- text-align:left;color:#f2f5ff;border:0;border-radius:0;
- background:#2b3949;cursor:pointer;transition:background .15s;
-}
-.lfx .lfx-pay-title:hover{background:#334559}
-.lfx .lfx-pay-title:focus-visible,.lfx .lfx-pay-card:focus-visible{outline:2px solid #9bc3ff;outline-offset:-2px}
-.lfx .lfx-pay-symbol{
- flex:0 0 30px;display:grid;place-items:center;width:30px;height:30px;
- border:1px solid #9bb6dc3a;border-radius:8px;background:#5577a033;
- color:#bad4ff;font-size:16px;
-}
-.lfx .lfx-pay-description{display:flex;min-width:0;flex:1 1 auto;align-items:center}
-.lfx .lfx-pay-description strong{font-size:12px;font-weight:850;line-height:1.35}
-.lfx .lfx-pay-description small{display:none}
-.lfx .lfx-pay-count{font-size:10px;font-weight:600;color:#aebed3;white-space:nowrap;margin-left:auto}
-.lfx .lfx-pay-icons{display:none}
-.lfx .lfx-pay-chevron{
- display:grid;place-items:center;position:relative;
- flex:0 0 29px;width:29px;height:29px;margin:0 0 0 4px;
- border-radius:8px;border:1px solid #88a9d35e;
- background:#1d2b3e;color:#c1d8f7;transform:none;
- transition:background .18s,border-color .18s;
-}
-.lfx .lfx-pay-chevron::after{
- content:"";display:block;width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;
- transform:translateY(-2px) rotate(45deg);transition:transform .18s;
-}
-.lfx .lfx-pay-chevron.open{transform:none;background:#456fab;border-color:#8dbfff9a}
-.lfx .lfx-pay-chevron.open::after{transform:translateY(2px) rotate(225deg)}
-.lfx .lfx-pay-grid{
- box-sizing:border-box;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
- grid-auto-rows:auto;align-items:stretch;gap:9px;width:100%;
- padding:11px;background:#1a2430;border-top:1px solid #c9dafa14;
-}
-.lfx .lfx-pay-grid>.lfx-pay-card:only-child{grid-column:1 / -1}
-.lfx .lfx-pay-card{
- display:grid;grid-template-columns:minmax(0,1fr) 17px;grid-template-rows:28px minmax(0,1fr);
- align-items:start;gap:6px 4px;align-self:stretch;
- position:relative;box-sizing:border-box;width:100%;min-width:0;
- min-height:115px;height:auto;max-height:none;padding:11px 10px 10px;
- text-align:left;border-radius:10px;border:1px solid #a9c0da38;
- background:#354354;color:#f5f8ff;transition:border-color .15s,background .15s;
-}
-.lfx .lfx-pay-card:hover:not(:disabled){border-color:#a7c8f28f}
-.lfx .lfx-pay-card.selected{border-color:#8fb5f4;background:#3c5370}
-.lfx .lfx-pay-card.unavailable{opacity:.45}
-.lfx .lfx-pay-card .lfx-pay-brand{
- grid-column:1;grid-row:1;display:grid;place-items:center;
- width:max-content;max-width:100%;min-width:37px;height:27px;
- flex:none;margin:0;padding:0 7px;border-radius:5px;background:#e8effa;color:#214369;
- font-size:10px;font-weight:950;white-space:nowrap;
-}
-.lfx .lfx-pay-card .lfx-brand-dana{background:#128ee3;color:white}
-.lfx .lfx-pay-card .lfx-brand-gopay{background:#147cb6;color:white}
-.lfx .lfx-pay-card .lfx-brand-bca_va{background:#175aa6;color:#fff}
-.lfx .lfx-pay-card .lfx-brand-bni_va{background:#e97825;color:#fff}
-.lfx .lfx-pay-card .lfx-pay-card-details{
- grid-column:1/-1;grid-row:2;
- display:flex;flex-direction:column;min-width:0;gap:4px;
-}
-.lfx .lfx-pay-card .lfx-pay-name{font-size:10px;font-weight:850;line-height:1.3;overflow-wrap:anywhere}
-.lfx .lfx-pay-card .lfx-pay-price{font-size:11px;font-weight:850;color:#f1f7ff}
-.lfx .lfx-pay-card .lfx-pay-auto{padding-top:5px;margin-top:2px;border-top:1px dotted #ffffff2b;font-size:9px;font-style:italic;color:#afc0d6}
-.lfx .lfx-pay-card .lfx-pay-radio{grid-column:2;grid-row:1;align-self:start;justify-self:end;margin:0}
-.lfx .lfx-pay-disclaimer{margin:13px 0 0;font-size:10px;line-height:1.5;color:#8c9eb9}
-
 /* Keep preview control outside main page, as in previous version. */
 .lab-toolbar{position:static!important;inset:auto!important;display:block!important;width:100%!important;max-width:none!important;z-index:1!important;padding:0!important;background:#080d16!important;text-align:right;border:0!important;border-top:1px solid #ffffff13!important}
 .lab-toolbar>summary{display:inline-block!important;margin:4px 12px!important;padding:6px 12px!important;font-size:9px!important;border-radius:6px!important}
@@ -271,27 +117,436 @@
 
 @media(max-width:639px){
  .lfx .lfx-hero{height:clamp(168px,52vw,205px);max-height:205px}
- .lfx .lfx-nominal-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
- .lfx .lfx-nominal-grid>.lfx-nominal{min-height:104px;padding:10px 9px 8px}
- .lfx .lfx-panel-header{grid-template-columns:39px minmax(0,1fr);min-height:41px}
- .lfx .lfx-panel-header>.lfx-number{width:39px;min-height:41px;font-size:13px}
- .lfx .lfx-panel-header>div{padding:7px 11px}
- .lfx .lfx-panel-header h2{font-size:12px}
- .lfx .lfx-pay-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px}
- .lfx .lfx-pay-card{min-height:114px;padding:10px 9px 9px}
- .lfx .lfx-pay-card .lfx-pay-brand{min-width:30px;font-size:9px}
- .lfx .lfx-pay-count{font-size:9px}
 }
 @media(min-width:640px) and (max-width:767px){
  .lfx .lfx-hero{height:210px;max-height:210px}
- .lfx .lfx-nominal-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media(min-width:768px) and (max-width:1023px){
  .lfx .lfx-hero{height:220px;max-height:220px}
- .lfx .lfx-nominal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(min-width:1024px){
  .lfx .lfx-hero{height:240px;max-height:240px}
  .lfx .lfx-hero img{object-fit:contain;object-position:center}
- .lfx .lfx-nominal-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+
+/* LFAMILIA checkout sizing: no fixed-height nominal cards, no forced grid row tracks.
+   Single source for step headers, nominal cards and payment UI. */
+/* Section header grows from text + padding; number fills the same header row. */
+.lfx .lfx-panel-header{
+  display:grid;
+  grid-template-columns:38px minmax(0,1fr);
+  align-items:stretch;
+  gap:0;
+  min-height:0;
+  padding:0;
+  background:linear-gradient(105deg,#2b3645,#293443);
+  border-bottom:1px solid #ffffff12;
+}
+.lfx .lfx-panel-header>.lfx-number{
+  display:grid;
+  place-items:center;
+  width:auto;
+  height:auto;
+  min-height:0;
+  padding:0;
+  margin:0;
+  border:0;
+  border-radius:0;
+  background:linear-gradient(130deg,#447bc8,#3761a8);
+  color:#f4f8ff;
+  font-size:13px;
+  line-height:1;
+  font-weight:900;
+  box-shadow:inset -1px 0 #ffffff20;
+}
+.lfx .lfx-panel-header>div{
+  display:flex;
+  align-items:center;
+  min-width:0;
+  margin:0;
+  padding:7px 11px;
+}
+.lfx .lfx-panel-header h2{
+  margin:0;
+  font-size:12px;
+  line-height:1.3;
+  font-weight:850;
+  color:#f0f6ff;
+}
+.lfx .lfx-panel-header p{display:none}
+
+/* Nominal: content determines height; equal columns and natural row sizing. */
+.lfx .lfx-nominal-group+.lfx-nominal-group{margin-top:16px}
+.lfx .lfx-nominal-group .lfx-subtitle{margin:0 0 11px}
+.lfx .lfx-nominal-grid{
+  display:grid;
+  width:100%;
+  min-width:0;
+  height:auto;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:none;
+  grid-auto-rows:auto;
+  grid-auto-flow:row;
+  gap:11px;
+  justify-items:stretch;
+  align-items:stretch;
+  align-content:start;
+}
+.lfx .lfx-nominal-grid>.lfx-nominal{
+  position:relative;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:flex-start;
+  width:100%;
+  height:auto;
+  min-height:0;
+  max-height:none;
+  min-width:0;
+  margin:0;
+  padding:15px 12px 12px;
+  gap:18px;
+  overflow:visible;
+  text-align:left;
+  border-radius:11px;
+  border:1px solid #b6c9e040;
+  background:linear-gradient(150deg,#2b3950,#1d2c40);
+  box-shadow:0 4px 14px #0003;
+  color:#f3f8ff;
+  transition:border-color .15s,background .15s;
+}
+.lfx .lfx-nominal-grid>.lfx-nominal.selected{
+  background:linear-gradient(145deg,#294654,#203840);
+  border-color:#b5e988;
+  box-shadow:0 0 0 1px #c8f66b29,0 4px 14px #0004;
+}
+.lfx .lfx-nominal-grid>.lfx-nominal:hover:not(:disabled){border-color:#91b8fcaa}
+.lfx .lfx-nominal .lfx-nominal-top{
+  display:flex;
+  flex:1 1 auto;
+  align-items:flex-start;
+  justify-content:space-between;
+  min-width:0;
+  min-height:0;
+  height:auto;
+  gap:8px;
+  padding:0;
+  margin:0;
+}
+.lfx .lfx-nominal .lfx-nominal-name{
+  display:block;
+  flex:1;
+  min-width:0;
+}
+.lfx .lfx-nominal .lfx-nominal-name strong{
+  display:block;
+  max-height:none;
+  white-space:normal;
+  overflow:visible;
+  overflow-wrap:anywhere;
+  font-size:11px;
+  line-height:1.4;
+  font-weight:850;
+  color:#f2f6ff;
+}
+.lfx .lfx-nominal .lfx-diamond{
+  display:block;
+  flex:0 0 auto;
+  font-size:22px;
+  line-height:1;
+  margin:0;
+  color:#79b7ff;
+  text-shadow:0 0 15px #76a9ff67;
+}
+.lfx .lfx-nominal:nth-child(4n) .lfx-diamond{color:#b4a4ff}
+.lfx .lfx-nominal .lfx-item-art{
+  display:block;
+  flex:0 0 auto;
+  width:30px;
+  height:30px;
+  object-fit:contain;
+  border-radius:5px;
+}
+.lfx .lfx-nominal .lfx-nominal-bottom{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  flex:0 0 auto;
+  min-height:0;
+  height:auto;
+  width:100%;
+  margin:0;
+  padding:10px 0 0;
+  border-top:1px solid #e6f0ff25;
+  gap:6px;
+}
+.lfx .lfx-nominal .lfx-nominal-bottom b{
+  display:block;
+  font-size:12px;
+  font-weight:850;
+  line-height:1.3;
+  white-space:nowrap;
+  color:#edf5ff;
+}
+.lfx .lfx-nominal .lfx-nominal-bottom small{
+  font-size:8px;
+  font-weight:900;
+  color:#c9f59a;
+  white-space:nowrap;
+}
+.lfx .lfx-nominal .lfx-check{
+  position:absolute;
+  top:0;right:0;
+  width:21px;height:21px;
+  display:grid;place-items:center;
+  border-bottom-left-radius:8px;
+  color:#112319;
+  font-size:11px;
+  font-weight:950;
+  pointer-events:none;
+}
+.lfx .lfx-nominal.selected .lfx-check{background:#c8f66b}
+
+/* Payment: outer categories as a vertical stack; expanded method cards in grid. */
+.lfx .lfx-pay-list{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  flex-wrap:nowrap;
+  gap:10px;
+  min-width:0;
+}
+.lfx .lfx-pay-group{
+  display:block;
+  min-width:0;
+  overflow:hidden;
+  border:1px solid #b3c5db29;
+  border-radius:11px;
+  background:#1b2736;
+}
+.lfx .lfx-pay-group.selected{border-color:#92b9fb9c}
+.lfx .lfx-pay-group.coin{background:#263547;border-color:#9abcec4b}
+.lfx .lfx-coin-row{
+  display:flex;
+  align-items:center;
+  width:100%;
+  gap:11px;
+  padding:10px 12px;
+  background:linear-gradient(110deg,#31475e,#28394c);
+  border:0;
+  color:#f2f6ff;
+  text-align:left;
+}
+.lfx .lfx-coin-emblem{
+  display:grid;
+  place-items:center;
+  width:39px;height:39px;
+  flex:0 0 39px;
+  border:2px solid #c4dafa;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 17%,#dae8ff,#6594d9 58%,#285388);
+  color:#173d6d;
+  box-shadow:0 4px 12px #0005;
+  font-size:13px;
+  font-weight:950;
+}
+.lfx .lfx-coin-description{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  flex:1;
+  min-width:0;
+}
+.lfx .lfx-coin-description strong{font-size:12px;font-weight:850;line-height:1.3}
+.lfx .lfx-coin-description small{font-size:10px;line-height:1.3;color:#bbcce3}
+.lfx .lfx-coin-status{font-size:10px;color:#c5d8f5}
+.lfx .lfx-coin-row .lfx-pay-radio{margin:0}
+.lfx .lfx-pay-title{
+  display:flex;
+  align-items:center;
+  width:100%;
+  gap:11px;
+  padding:10px 12px;
+  min-height:0;
+  border:0;
+  border-radius:0;
+  background:#2b394b;
+  color:#eef5ff;
+  text-align:left;
+  cursor:pointer;
+}
+.lfx .lfx-pay-title:hover{background:#324459}
+.lfx .lfx-pay-symbol{
+  display:grid;
+  place-items:center;
+  flex:0 0 31px;
+  width:31px;height:31px;
+  border:1px solid #97b5dd46;
+  border-radius:8px;
+  background:#7298c82a;
+  color:#b9d6ff;
+  font-size:16px;
+}
+.lfx .lfx-pay-description{
+  display:flex;
+  flex:1 1 auto;
+  min-width:0;
+  align-items:center;
+  justify-content:flex-start;
+  text-align:left;
+}
+.lfx .lfx-pay-description strong{
+  font-size:12px;
+  font-weight:850;
+  line-height:1.3;
+}
+.lfx .lfx-pay-description small{display:none}
+.lfx .lfx-pay-count{font-size:9px;color:#aabed6;white-space:nowrap}
+.lfx .lfx-pay-chevron{
+  display:grid;
+  place-items:center;
+  position:relative;
+  flex:0 0 30px;
+  width:30px;height:30px;
+  margin-left:2px;
+  border:1px solid #8dafe16b;
+  border-radius:8px;
+  color:#c2dafb;
+  background:#20324a;
+  transform:none;
+}
+.lfx .lfx-pay-chevron::after{
+  content:"";
+  display:block;
+  width:7px;height:7px;
+  border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);
+  transition:transform .16s;
+}
+.lfx .lfx-pay-chevron.open{background:#426dab}
+.lfx .lfx-pay-chevron.open::after{transform:translateY(2px) rotate(225deg)}
+.lfx .lfx-pay-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-auto-rows:auto;
+  gap:9px;
+  align-items:stretch;
+  padding:12px;
+  background:#192532;
+  border-top:1px solid #ffffff12;
+}
+.lfx .lfx-pay-grid>.lfx-pay-card:only-child{grid-column:1 / -1}
+.lfx .lfx-pay-card{
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:flex-start;
+  min-width:0;
+  width:100%;
+  height:auto;
+  max-height:none;
+  min-height:0;
+  padding:12px 11px 11px;
+  gap:11px;
+  border:1px solid #9fb7d238;
+  border-radius:10px;
+  background:#354357;
+  color:#f2f7ff;
+  text-align:left;
+}
+.lfx .lfx-pay-card.selected{background:#384f70;border-color:#8db9fe}
+.lfx .lfx-pay-card.unavailable{opacity:.48}
+.lfx .lfx-method-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  min-width:0;
+  width:100%;
+  gap:8px;
+}
+.lfx .lfx-pay-brand{
+  display:grid;
+  place-items:center;
+  min-width:36px;
+  width:max-content;
+  max-width:100%;
+  padding:0 8px;
+  height:27px;
+  flex:0 0 auto;
+  border-radius:5px;
+  background:#edf4ff;
+  color:#20456b;
+  font-size:10px;
+  font-weight:950;
+}
+.lfx .lfx-brand-dana{color:white;background:#168fe4}
+.lfx .lfx-brand-gopay{color:white;background:#1685c3}
+.lfx .lfx-brand-bca_va{color:white;background:#155ba6}
+.lfx .lfx-brand-bni_va{color:white;background:#e58024}
+.lfx .lfx-pay-radio{
+  display:grid;
+  place-items:center;
+  flex:0 0 16px;
+  width:16px;height:16px;
+  border:1px solid #c8d7f280;
+  border-radius:50%;
+  margin:0;
+  font-size:9px;
+}
+.lfx .lfx-pay-card.selected .lfx-pay-radio,
+.lfx .lfx-coin-row[aria-pressed="true"] .lfx-pay-radio{color:#0d2845;background:#a7ccff;border-color:#a7ccff}
+.lfx .lfx-method-body{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:7px;
+  min-width:0;
+}
+.lfx .lfx-pay-name{
+  display:block;
+  min-width:0;
+  font-size:11px;
+  font-weight:850;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+}
+.lfx .lfx-pay-price{
+  display:block;
+  font-size:11px;
+  font-weight:800;
+  color:#f1f5fc;
+  line-height:1.3;
+}
+.lfx .lfx-pay-auto{
+  display:block;
+  margin:0;
+  padding-top:7px;
+  border-top:1px dotted #ffffff26;
+  font-size:9px;
+  font-style:italic;
+  color:#b6c6dc;
+}
+.lfx .lfx-pay-disclaimer{font-size:10px;line-height:1.5;color:#849bb7;margin:14px 0 0}
+.lfx .lfx-pay-title:focus-visible,.lfx .lfx-pay-card:focus-visible{outline:2px solid #a2c6fe;outline-offset:-2px}
+
+@media(min-width:640px) and (max-width:767px){
+  .lfx .lfx-nominal-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(min-width:768px) and (max-width:1023px){
+  .lfx .lfx-nominal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(min-width:1024px){
+  .lfx .lfx-nominal-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:400px){
+  .lfx .lfx-panel-header{grid-template-columns:36px minmax(0,1fr)}
+  .lfx .lfx-panel-header>div{padding:6px 10px}
+  .lfx .lfx-nominal-grid{gap:9px}
+  .lfx .lfx-nominal-grid>.lfx-nominal{padding:13px 10px 11px;gap:16px}
+  .lfx .lfx-pay-grid{gap:8px;padding:10px}
+  .lfx .lfx-pay-card{padding:11px 9px}
 }
