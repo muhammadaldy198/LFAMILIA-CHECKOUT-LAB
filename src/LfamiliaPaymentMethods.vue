@@ -229,4 +229,20 @@ function choosePayment(code) {
   .lab-payment-method-total { font-size: 12px; }
 }
 
+
+/* The source storefront payment styles use 9-11px !important labels.
+   Improve legibility on real desktop monitors without changing mobile behavior. */
+@media (min-width:1024px) {
+ .lf-payment-group-main { padding:12px 16px !important; min-height:60px !important; }
+ .lf-payment-group-copy strong { font-size:14px !important; line-height:1.35 !important; }
+ .lf-payment-group-copy small { font-size:12px !important; line-height:1.45 !important; }
+ .lf-payment-brand-strip { padding:9px 15px !important; }
+ .lf-payment-brand-strip > span { font-size:10px !important; }
+ .lab-payment-amount { font-size:14px; }
+ .lab-payment-method-grid { gap:14px; padding:16px; }
+ .lab-payment-method-card { min-height:119px; padding:16px; }
+ .lab-payment-method-name { font-size:14px; line-height:1.45; }
+ .lab-payment-method-total { font-size:15px; }
+}
+
 </style>

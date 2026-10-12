@@ -1,32 +1,32 @@
 /* Source-of-truth layout reconciliation: Ourastore captured HTML + LFAMILIA main checkout.
    Only the checkout body is reskinned. CustomerShell owns the global header and footer. */
 .lfx{--edge:rgba(155,176,207,.17);--muted:#9eaec5;--bright:#edf3ff;background:radial-gradient(ellipse at 70% 2%,#4762c10b,transparent 35%),#0c111a}
-.lfx-container{width:min(1170px,calc(100% - 32px))}
-.lfx-hero{height:clamp(230px,42vw,355px);background:#172340}
-.lfx-hero img{width:100%;height:100%;object-fit:cover;object-position:center}
+
+
+
 .lfx-product-header{background:repeating-linear-gradient(135deg,transparent 0,transparent 125px,rgba(185,210,247,.035) 126px,rgba(185,210,247,.035) 185px),linear-gradient(120deg,#19212d,#242a34 66%,#1d252f)}
-.lfx-product-header-inner{display:grid;grid-template-columns:240px minmax(0,1fr);grid-template-rows:auto auto;column-gap:20px;row-gap:4px;min-height:160px;align-content:center;align-items:center;padding-block:10px}
-.lfx-product-cover{grid-column:1;grid-row:1/3;position:relative;width:240px;height:240px;top:-112px;flex:none;margin-bottom:-92px;align-self:start;filter:drop-shadow(10px 19px 13px #0009)}
-.lfx-product-cover img,.lfx-product-cover>span{width:240px;height:240px;max-width:none;transform:rotateY(20deg) rotateX(-4deg);transform-origin:left center;border-radius:16px}
-.lfx-product-intro{grid-column:2;grid-row:1;padding:9px 0 0;align-self:end}
-.lfx-product-intro h1{font-size:26px;letter-spacing:.005em}
-.lfx-product-intro>p{margin:5px 0 0}
+
+
+
+
+
+
 .lfx-breadcrumb{margin-bottom:6px}
 .lfx-overline{display:none}
-.lfx-trust{grid-column:2;grid-row:2;align-self:start;display:flex;gap:12px;padding:9px 0 7px}
-.lfx-trust span{background:transparent;border:0;padding:5px 2px;color:#d4dded;font-size:11px;white-space:nowrap}
+
+
 .lfx-trust b{color:#8eabfc}
-.lfx-content{padding-top:32px}
+
 .lfx-mobile-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:4px;background:#29313c;border:1px solid #ffffff15;border-radius:12px;margin:0 0 20px}
-.lfx-mobile-tabs button{min-height:36px;border:0;border-radius:9px;background:transparent;color:#c1c9d8;font-size:12px;font-weight:800}
+
 .lfx-mobile-tabs button.active{background:linear-gradient(100deg,#4470bf,#598ad4);color:#fff}
-.lfx-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(270px,1fr);gap:32px;align-items:start}
+
 .lfx-sections{gap:22px}
 .lfx-panel{background:#161d29;border:1px solid #ffffff16;border-radius:13px}
-.lfx-panel-content{padding:16px}
+
 .lfx-category-tabs{margin-bottom:13px}
 .lfx-subtitle{margin:0 0 12px}
-.lfx-aside{position:sticky;top:84px}
+
 .lfx-cta-side{background:#182231;border:1px solid #9db4d638;border-radius:13px;padding:18px;box-shadow:0 7px 22px #0003}
 .lfx-side-heading{display:flex;flex-direction:column;gap:5px;margin-bottom:15px}
 .lfx-side-heading strong{font-size:13px;color:#ebf3ff}
@@ -38,95 +38,100 @@
 .lfx-confirm-rows{gap:12px}
 .lfx-confirm-rows .lfx-saved{color:#c8f66b}
 .lfx-confirm-final b{font-size:19px}
-.lab-toolbar{position:fixed!important;top:70px!important;right:10px!important;left:auto!important;bottom:auto!important;z-index:49!important;width:auto!important;max-width:275px!important;display:block!important;padding:0!important;background:transparent!important;border:0!important;color:#fff!important;font-size:10px!important}
-.lab-toolbar>summary{display:block;cursor:pointer;padding:5px 9px;background:#1c2e4de3;border:1px solid #89a8e060;border-radius:0 0 8px 8px;color:#cbdcff;font-size:9px;letter-spacing:.07em;list-style:none}
+
+
 .lab-toolbar>summary::-webkit-details-marker{display:none}
-.lab-toolbar-body{display:flex;flex-direction:column;gap:7px;background:#132035ed;border:1px solid #789dd266;border-radius:10px;padding:12px;box-shadow:0 8px 30px #000b}
+
 .lab-toolbar-body strong{color:#eff5ff!important}
 .lab-toolbar-body select{background:#16253a}
 .lab-toolbar-body a{color:#bdd4ff}
-@media(min-width:640px) and (max-width:767px){
-}
-@media(min-width:768px) and (max-width:1023px){
-}
-@media(min-width:1024px){
-  .lfx-hero{height:min(30vw,340px);min-height:235px;background:#172340}
-  .lfx-hero img{object-fit:contain}
-}
-@media(max-width:1023px){
-  .lfx-layout{display:block}
-  .lfx-aside{display:none}
-  .lfx-sticky-mobile{display:flex;position:fixed;z-index:64;bottom:0;left:0;right:0;align-items:center;justify-content:space-between;gap:12px;background:#1a1b20f5;border-top:1px solid #798ba434;box-shadow:0 -8px 28px #0006;padding:13px max(14px,env(safe-area-inset-left));padding-bottom:max(12px,env(safe-area-inset-bottom))}
-  .lfx-sticky-selection{min-width:0;flex:1;border:1px dashed #8792a462;border-radius:8px;font-size:10px;color:#c3c6d2;text-align:center;padding:11px 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-  .lfx-sticky-mobile button{min-height:42px;flex:none;border:0;border-radius:8px;background:linear-gradient(100deg,#82b9fb,#729fec);color:#12213b;padding:0 15px;font-size:12px;font-weight:850}
-  .lfx-sticky-mobile b{font-size:16px}
-  .lfx-content{padding-bottom:50px}
-  .lf-customer .lf-live-support{bottom:90px}
-}
-@media(max-width:767px){
-  .lfx-hero{height:clamp(245px,82vw,340px)}
-  .lfx-product-header-inner{grid-template-columns:128px minmax(0,1fr);grid-template-rows:auto auto;gap:4px 12px;min-height:128px;padding:8px 0 10px}
-  .lfx-product-cover{width:128px;height:128px;top:-64px;margin-bottom:-55px;grid-column:1;grid-row:1}
-  .lfx-product-cover img,.lfx-product-cover>span{width:128px;height:128px;border-radius:16px}
-  .lfx-product-intro{grid-column:2;grid-row:1;align-self:center;padding:7px 0}
-  .lfx-product-intro h1{font-size:16px}
-  .lfx-product-intro>p{margin:6px 0 0;font-size:11px}
-  .lfx-trust{grid-column:1/-1;grid-row:2;padding:2px 0 0;gap:4px;justify-content:space-between}
-  .lfx-trust span{font-size:9px;padding:4px 2px}
-  .lfx-trust b{font-size:12px}
-  .lfx-mobile-tabs{margin:0 0 16px}
-  .lfx-sections{gap:16px}
-  .lfx-panel-content{padding:15px}
-  .lfx-field-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .lfx-sticky-mobile{padding-inline:10px}
-  .lfx-sticky-mobile button{padding:0 12px}
-  .lab-toolbar{top:61px!important}
-}
-@media(max-width:400px){
-  .lfx-product-cover{width:128px;height:128px;top:-64px;margin-bottom:-55px}
-  .lfx-product-cover img,.lfx-product-cover>span{width:128px;height:128px}
-  .lfx-product-intro h1{font-size:14px}
-  .lfx-trust span{font-size:8px}
-  .lfx-field-grid{gap:9px}
-  .lfx-sticky-selection{font-size:9px}
-  .lfx-sticky-mobile button{font-size:10px;padding:0 10px}
-}
-@media(min-width:640px) and (max-width:767px){}
 
-
-/* ================================================================
-   FINAL checkout geometry — SINGLE owner for these three components.
-   Supersedes initial premium.css; legacy qa-fixes.css is NOT imported.
-   ================================================================ */
-
-/* Preserve existing banner and genuine 3D rotation from current preview. */
-.lfx .lfx-hero{height:205px;min-height:0;max-height:205px;overflow:hidden;background:#18284b}
-.lfx .lfx-hero img{display:block;width:100%;height:100%;object-fit:cover;object-position:32% center}
-.lfx .lfx-product-cover{perspective:800px;perspective-origin:left center;transform-style:preserve-3d;overflow:visible;filter:none;isolation:isolate;z-index:3}
-.lfx .lfx-cover-frame{position:relative;width:100%;height:100%;perspective:inherit;perspective-origin:left center;transform-style:preserve-3d;isolation:isolate;overflow:visible}
-.lfx .lfx-cover-frame>img,.lfx .lfx-cover-frame>span{display:block;width:100%;height:100%;object-fit:cover;border-radius:16px;transform:rotateY(20deg) rotateX(-4deg);transform-origin:left center;backface-visibility:hidden;box-shadow:16px 19px 28px -9px #000d,5px 9px 15px #0009;outline:1px solid #d2e2ff38}
+/* Sole source of responsive layout geometry. Base LFAMILIA CustomerShell is untouched. */
+.lfx .lfx-container{width:min(1440px,calc(100% - clamp(28px,5vw,96px)));max-width:none;margin-inline:auto}
+.lfx .lfx-hero{position:relative;width:100%;height:clamp(225px,22vw,355px);max-height:none;min-height:0;overflow:hidden;background:#172340}
+.lfx .lfx-hero img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center}
+.lfx .lfx-hero-overlay{pointer-events:none}
+.lfx .lfx-hero-micro{bottom:15px;right:max(30px,calc((100vw - 1390px)/2))}
+.lfx .lfx-product-header-inner{--lfx-cover-size:clamp(172px,14vw,232px);display:grid;grid-template-columns:var(--lfx-cover-size) minmax(0,1fr);grid-template-rows:auto auto;gap:4px clamp(16px,2.4vw,36px);min-height:clamp(155px,11vw,200px);align-content:center;align-items:center;padding-block:17px}
+.lfx .lfx-product-cover{grid-column:1;grid-row:1/3;position:relative;width:var(--lfx-cover-size);height:var(--lfx-cover-size);aspect-ratio:1/1;top:calc(var(--lfx-cover-size) * -0.43);flex:none;margin-bottom:calc(var(--lfx-cover-size) * -0.36);align-self:start;overflow:visible;filter:none;isolation:isolate;z-index:3;perspective:800px;perspective-origin:left center;transform-style:preserve-3d}
+.lfx .lfx-product-cover img,.lfx .lfx-product-cover>span{width:100%;height:100%;max-width:100%;aspect-ratio:1/1;object-fit:cover;transform:rotateY(20deg) rotateX(-4deg);transform-origin:left center;border-radius:16px}
+.lfx .lfx-cover-frame{position:relative;width:100%;height:100%;aspect-ratio:1/1;transform-style:preserve-3d}
+.lfx .lfx-cover-frame>img,.lfx .lfx-cover-frame>span{display:block;width:100%;height:100%;aspect-ratio:1/1;max-width:100%;object-fit:cover;border-radius:16px;transform:rotateY(20deg) rotateX(-4deg);transform-origin:left center;backface-visibility:hidden;box-shadow:16px 19px 28px -9px #000d,5px 9px 15px #0009;outline:1px solid #d2e2ff38}
 .lfx .lfx-cover-frame>span{display:grid;place-items:center;background:linear-gradient(140deg,#3459a3,#162646);color:#f1f7ff}
 .lfx .lfx-cover-frame::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:16px;background:linear-gradient(107deg,#ffffff25,transparent 21%,transparent 82%,#0005);box-shadow:inset 3px 0 4px -2px #ffffff6a;transform:rotateY(20deg) rotateX(-4deg);transform-origin:left center}
-
-/* Keep preview control outside main page, as in previous version. */
-.lab-toolbar{position:static!important;inset:auto!important;display:block!important;width:100%!important;max-width:none!important;z-index:1!important;padding:0!important;background:#080d16!important;text-align:right;border:0!important;border-top:1px solid #ffffff13!important}
-.lab-toolbar>summary{display:inline-block!important;margin:4px 12px!important;padding:6px 12px!important;font-size:9px!important;border-radius:6px!important}
-.lab-toolbar-body{display:flex;max-width:280px;margin:0 12px 10px auto}
-
-@media(max-width:639px){
- .lfx .lfx-hero{height:clamp(168px,52vw,205px);max-height:205px}
-}
-@media(min-width:640px) and (max-width:767px){
- .lfx .lfx-hero{height:210px;max-height:210px}
+.lfx .lfx-product-intro{grid-column:2;grid-row:1;min-width:0;padding:6px 0 0;align-self:end}
+.lfx .lfx-product-intro h1{font-size:clamp(24px,2vw,34px);line-height:1.2;letter-spacing:-.02em}
+.lfx .lfx-product-intro>p{margin:6px 0 0;font-size:clamp(13px,1.05vw,16px)}
+.lfx .lfx-breadcrumb{margin-bottom:8px;font-size:12px}
+.lfx .lfx-trust{grid-column:2;grid-row:2;align-self:start;display:flex;flex-wrap:wrap;gap:clamp(9px,1.25vw,18px);padding:11px 0 6px}
+.lfx .lfx-trust span{background:transparent;border:0;padding:5px 2px;color:#d4dded;font-size:clamp(11px,.85vw,13px);white-space:normal}
+.lfx .lfx-content{padding-top:clamp(22px,2.1vw,38px);padding-bottom:70px}
+.lfx .lfx-mobile-tabs button{min-height:40px;border:0;border-radius:9px;background:transparent;color:#c1c9d8;font-size:clamp(12px,.95vw,14px);font-weight:800}
+.lfx .lfx-layout{display:grid;grid-template-columns:minmax(0,1.85fr) minmax(320px,.87fr);gap:clamp(18px,2vw,32px);align-items:start}
+.lfx .lfx-panel-content{padding:clamp(16px,1.55vw,23px)}
+.lfx .lfx-aside{position:sticky;top:84px;min-width:0}
+.lfx .lfx-cta-side .lfx-order-button{font-size:14px;min-height:48px}
+.lfx .lfx-side-heading strong{font-size:clamp(14px,1.1vw,17px)}
+.lfx .lfx-side-heading small{font-size:clamp(11px,.83vw,13px)}
+.lfx .lfx-side-selection{font-size:clamp(12px,.95vw,14px)}
+.lab-toolbar{position:static!important;inset:auto!important;display:block!important;width:100%!important;max-width:none!important;z-index:1!important;padding:0!important;background:#080d16!important;text-align:right!important;border:0!important;border-top:1px solid #ffffff13!important}
+.lab-toolbar>summary{display:inline-block!important;cursor:pointer;margin:4px 12px!important;padding:6px 12px!important;border-radius:6px!important;background:#1c2e4de3;border:1px solid #89a8e060;color:#cbdcff;font-size:9px!important}
+.lab-toolbar-body{display:flex;max-width:280px;margin:0 12px 10px auto;flex-direction:column;gap:7px;background:#132035ed;border:1px solid #789dd266;border-radius:10px;padding:12px;box-shadow:0 8px 30px #000b}
+@media(min-width:1600px){
+ .lfx .lfx-container{width:min(1480px,calc(100% - 100px))}
+ .lfx .lfx-hero{height:360px}
+ .lfx .lfx-product-header-inner{--lfx-cover-size:235px;min-height:195px}
+ .lfx .lfx-layout{grid-template-columns:minmax(0,1.9fr) minmax(365px,.86fr)}
 }
 @media(min-width:768px) and (max-width:1023px){
- .lfx .lfx-hero{height:220px;max-height:220px}
+ .lfx .lfx-container{width:calc(100% - 42px)}
+ .lfx .lfx-hero{height:clamp(225px,27vw,275px)}
+ .lfx .lfx-product-header-inner{--lfx-cover-size:clamp(158px,19vw,190px);min-height:155px;gap:4px 21px;padding-block:12px}
+ .lfx .lfx-product-intro h1{font-size:clamp(22px,2.5vw,27px)}
+ .lfx .lfx-trust span{font-size:12px}
+ .lfx .lfx-layout{display:block}
+ .lfx .lfx-aside{display:none}
+ .lfx .lfx-content{padding-bottom:70px}
+ .lfx .lfx-sticky-mobile{display:flex;position:fixed;z-index:64;bottom:0;left:0;right:0;align-items:center;justify-content:space-between;gap:12px;background:#1a1b20f5;border-top:1px solid #798ba434;box-shadow:0 -8px 28px #0006;padding:12px max(20px,env(safe-area-inset-left));padding-bottom:max(12px,env(safe-area-inset-bottom))}
+ .lfx .lfx-sticky-selection{flex:1;min-width:0;border:1px dashed #8792a462;border-radius:8px;font-size:12px;color:#c3c6d2;text-align:center;padding:11px 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+ .lfx .lfx-sticky-mobile button{min-height:44px;border:0;border-radius:8px;background:linear-gradient(100deg,#82b9fb,#729fec);color:#12213b;padding:0 20px;font-size:13px;font-weight:850}
 }
-@media(min-width:1024px){
- .lfx .lfx-hero{height:240px;max-height:240px}
- .lfx .lfx-hero img{object-fit:contain;object-position:center}
+@media(max-width:767px){
+ .lfx .lfx-container{width:calc(100% - 28px)}
+ .lfx .lfx-hero{height:clamp(176px,48vw,230px)}
+ .lfx .lfx-hero img{object-fit:cover;object-position:center}
+ .lfx .lfx-hero-micro{display:none}
+ .lfx .lfx-product-header-inner{--lfx-cover-size:clamp(112px,30vw,142px);grid-template-columns:var(--lfx-cover-size) minmax(0,1fr);grid-template-rows:auto auto;gap:4px 12px;min-height:128px;padding:10px 0 12px}
+ .lfx .lfx-product-cover{grid-column:1;grid-row:1;top:calc(var(--lfx-cover-size) * -0.45);margin-bottom:calc(var(--lfx-cover-size) * -0.38)}
+ .lfx .lfx-product-intro{grid-column:2;grid-row:1;align-self:center;padding:5px 0}
+ .lfx .lfx-product-intro h1{font-size:clamp(16px,4.2vw,20px)}
+ .lfx .lfx-product-intro>p{margin:6px 0 0;font-size:11px}
+ .lfx .lfx-breadcrumb,.lfx .lfx-overline{display:none}
+ .lfx .lfx-trust{grid-column:1/-1;grid-row:2;padding:4px 0 0;gap:4px;justify-content:space-between}
+ .lfx .lfx-trust span{font-size:clamp(9px,2.2vw,11px);padding:4px 2px}
+ .lfx .lfx-trust b{font-size:12px}
+ .lfx .lfx-content{padding-top:18px;padding-bottom:70px}
+ .lfx .lfx-mobile-tabs{margin:0 0 16px}
+ .lfx .lfx-layout{display:block}
+ .lfx .lfx-aside{display:none}
+ .lfx .lfx-sections{gap:16px}
+ .lfx .lfx-panel-content{padding:14px}
+ .lfx .lfx-field-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .lfx .lfx-sticky-mobile{display:flex;position:fixed;z-index:64;bottom:0;left:0;right:0;align-items:center;justify-content:space-between;gap:10px;background:#1a1b20f5;border-top:1px solid #798ba434;box-shadow:0 -8px 28px #0006;padding:12px max(12px,env(safe-area-inset-left));padding-bottom:max(12px,env(safe-area-inset-bottom))}
+ .lfx .lfx-sticky-selection{flex:1;min-width:0;border:1px dashed #8792a462;border-radius:8px;font-size:10px;color:#c3c6d2;text-align:center;padding:11px 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+ .lfx .lfx-sticky-mobile button{min-height:43px;flex:none;border:0;border-radius:8px;background:linear-gradient(100deg,#82b9fb,#729fec);color:#12213b;padding:0 14px;font-size:12px;font-weight:850}
+ .lfx .lfx-sticky-mobile b{font-size:16px}
+ .lf-customer .lf-live-support{bottom:90px}
 }
-
+@media(max-width:420px){
+ .lfx .lfx-container{width:calc(100% - 24px)}
+ .lfx .lfx-product-header-inner{gap:4px 10px}
+ .lfx .lfx-product-intro h1{font-size:15px}
+ .lfx .lfx-trust span{font-size:9px}
+ .lfx .lfx-field-grid{gap:9px}
+ .lfx .lfx-sticky-selection{font-size:9px}
+ .lfx .lfx-sticky-mobile button{font-size:11px;padding:0 11px}
+}
 
 /* LFAMILIA checkout sizing: no fixed-height nominal cards, no forced grid row tracks.
    Single source for step headers, nominal cards and payment UI. */
@@ -217,4 +222,26 @@
 @media(max-width:400px){
   .lfx .lfx-panel-header{grid-template-columns:36px minmax(0,1fr)}
   .lfx .lfx-panel-header>div{padding:6px 10px}
+}
+
+/* Desktop typography follows compact section-card and original nominal source. */
+@media(min-width:1024px){
+ .lfx .lfx-panel-header{grid-template-columns:48px minmax(0,1fr)}
+ .lfx .lfx-panel-header>div{padding:12px 16px}
+ .lfx .lfx-panel-header>.lfx-number{font-size:16px}
+ .lfx .lfx-panel-header h2{font-size:15px}
+ .lfx .lfx-field>span{font-size:13px}
+ .lfx .lfx-field input{height:47px;font-size:14px}
+ .lfx .lfx-hint{font-size:12px}
+ .lfx .lfx-subtitle h3{font-size:15px}
+ .lfx .lfx-subtitle small{font-size:12px}
+ .lfx .lfx-nominal{min-height:116px}
+ .lfx .lfx-nominal-name strong{font-size:13px}
+ .lfx .lfx-nominal-name small{font-size:11px}
+ .lfx .lfx-nominal-bottom b{font-size:14px}
+ .lfx .lfx-voucher-input input,.lfx .lfx-voucher-input button{font-size:13px}
+ .lfx .lfx-category-tabs button{font-size:13px}
+}
+@media(min-width:1024px) and (max-width:1199px){
+ .lfx .lfx-nominal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
