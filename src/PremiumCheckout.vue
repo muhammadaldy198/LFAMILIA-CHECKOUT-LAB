@@ -65,12 +65,22 @@ function shortLogo(x){const m={qris:'QR',dana:'D',gopay:'G',bca_va:'BCA',bni_va:
                 <div v-if="packageTabs.length" class="lfx-category-tabs" role="tablist" aria-label="Kategori dari LFAMILIA"><button v-for="item in packageTabs" :key="item" role="tab" :aria-selected="(activePackageTab||packageTabs[0])===item" :class="{active:(activePackageTab||packageTabs[0])===item}" @click="activePackageTab=item">{{item}}</button></div>
                 <section v-for="itemsGroup in visiblePackageGroups" :key="itemsGroup.name||'default'" class="lfx-nominal-group">
                   <div v-if="itemsGroup.name" class="lfx-subtitle"><span class="lfx-mini-star">✦</span><h3>{{itemsGroup.name}}</h3><small>{{itemsGroup.items.length}} pilihan</small></div>
-                  <div class="lfx-nominal-grid">
-                    <button v-for="item in itemsGroup.items" :key="item.id" class="lfx-nominal" :class="{selected:String(chosen)===String(item.id)}" :disabled="item.is_available===false" :aria-pressed="String(chosen)===String(item.id)" @click="chosen=item.id">
-                      <span class="lfx-check">{{String(chosen)===String(item.id)?'✓':''}}</span>
-                      <span class="lfx-nominal-top"><span class="lfx-nominal-name"><strong>{{item.name}}</strong></span><img v-if="item.image_url" class="lfx-item-art" :src="item.image_url" alt="" loading="lazy"/><span v-else class="lfx-diamond" aria-hidden="true">✦</span></span>
+                  <div class="lfx-nominal-grid" role="radiogroup" :aria-label="itemsGroup.name || 'Pilih nominal'">
+                    <div v-for="item in itemsGroup.items" :key="item.id"
+                      class="lfx-nominal" :class="{selected:String(chosen)===String(item.id),unavailable:item.is_available===false}"
+                      role="radio" :aria-checked="String(chosen)===String(item.id)"
+                      :aria-disabled="item.is_available===false" :tabindex="item.is_available===false?-1:0"
+                      @click="item.is_available!==false&&(chosen=item.id)"
+                      @keydown.enter.prevent="item.is_available!==false&&(chosen=item.id)"
+                      @keydown.space.prevent="item.is_available!==false&&(chosen=item.id)">
+                      <span class="lfx-check" aria-hidden="true">{{String(chosen)===String(item.id)?'✓':''}}</span>
+                      <span class="lfx-nominal-top">
+                        <span class="lfx-nominal-name"><strong>{{item.name}}</strong><small>{{item.group_name||product.name}}</small></span>
+                        <img v-if="item.image_url" class="lfx-item-art" :src="item.image_url" alt="" loading="lazy"/>
+                        <span v-else class="lfx-diamond" aria-hidden="true">✦</span>
+                      </span>
                       <span class="lfx-nominal-bottom"><b>{{money(item.price_idr)}}</b><small v-if="String(chosen)===String(item.id)">DIPILIH</small></span>
-                    </button>
+                    </div>
                   </div>
                 </section>
                 <div v-if="!visiblePackageGroups.length" class="lfx-empty">Nominal belum tersedia.</div>
