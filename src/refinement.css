@@ -26,15 +26,6 @@
 
 .lfx-category-tabs{margin-bottom:13px}
 .lfx-subtitle{margin:0 0 12px}
-
-.lfx-cta-side{background:#182231;border:1px solid #9db4d638;border-radius:13px;padding:18px;box-shadow:0 7px 22px #0003}
-.lfx-side-heading{display:flex;flex-direction:column;gap:5px;margin-bottom:15px}
-.lfx-side-heading strong{font-size:13px;color:#ebf3ff}
-.lfx-side-heading small{font-size:10px;color:#9cacc1;line-height:1.5}
-.lfx-side-selection{min-height:51px;display:flex;align-items:center;justify-content:center;border:1px dashed #b3c3d74f;border-radius:10px;color:#c3cee0;font-size:11px;padding:12px;text-align:center;margin-bottom:14px}
-.lfx-cta-side .lfx-order-button{display:flex;margin:0;width:100%;gap:12px;background:linear-gradient(100deg,#86baf9,#6f9eeb)}
-.lfx-safety{padding-bottom:0}
-.lfx-sticky-mobile{display:none}
 .lfx-confirm-rows{gap:12px}
 .lfx-confirm-rows .lfx-saved{color:#c8f66b}
 .lfx-confirm-final b{font-size:19px}
@@ -67,13 +58,7 @@
 .lfx .lfx-trust span{background:transparent;border:0;padding:5px 2px;color:#d4dded;font-size:clamp(11px,.85vw,13px);white-space:normal}
 .lfx .lfx-content{padding-top:clamp(22px,2.1vw,38px);padding-bottom:70px}
 .lfx .lfx-mobile-tabs button{min-height:40px;border:0;border-radius:9px;background:transparent;color:#c1c9d8;font-size:clamp(12px,.95vw,14px);font-weight:800}
-.lfx .lfx-layout{display:grid;grid-template-columns:minmax(0,1.85fr) minmax(320px,.87fr);gap:clamp(18px,2vw,32px);align-items:start}
 .lfx .lfx-panel-content{padding:clamp(16px,1.55vw,23px)}
-.lfx .lfx-aside{position:sticky;top:84px;min-width:0}
-.lfx .lfx-cta-side .lfx-order-button{font-size:14px;min-height:48px}
-.lfx .lfx-side-heading strong{font-size:clamp(14px,1.1vw,17px)}
-.lfx .lfx-side-heading small{font-size:clamp(11px,.83vw,13px)}
-.lfx .lfx-side-selection{font-size:clamp(12px,.95vw,14px)}
 .lab-toolbar{position:static!important;inset:auto!important;display:block!important;width:100%!important;max-width:none!important;z-index:1!important;padding:0!important;background:#080d16!important;text-align:right!important;border:0!important;border-top:1px solid #ffffff13!important}
 .lab-toolbar>summary{display:inline-block!important;cursor:pointer;margin:4px 12px!important;padding:6px 12px!important;border-radius:6px!important;background:#1c2e4de3;border:1px solid #89a8e060;color:#cbdcff;font-size:9px!important}
 .lab-toolbar-body{display:flex;max-width:280px;margin:0 12px 10px auto;flex-direction:column;gap:7px;background:#132035ed;border:1px solid #789dd266;border-radius:10px;padding:12px;box-shadow:0 8px 30px #000b}
@@ -81,7 +66,6 @@
  .lfx .lfx-container{width:min(1480px,calc(100% - 100px))}
  .lfx .lfx-hero{height:360px}
  .lfx .lfx-product-header-inner{--lfx-cover-size:235px;min-height:195px}
- .lfx .lfx-layout{grid-template-columns:minmax(0,1.9fr) minmax(365px,.86fr)}
 }
 @media(min-width:768px) and (max-width:1023px){
  .lfx .lfx-container{width:calc(100% - 42px)}
@@ -89,12 +73,7 @@
  .lfx .lfx-product-header-inner{--lfx-cover-size:clamp(158px,19vw,190px);min-height:155px;gap:4px 21px;padding-block:12px}
  .lfx .lfx-product-intro h1{font-size:clamp(22px,2.5vw,27px)}
  .lfx .lfx-trust span{font-size:12px}
- .lfx .lfx-layout{display:block}
- .lfx .lfx-aside{display:none}
  .lfx .lfx-content{padding-bottom:70px}
- .lfx .lfx-sticky-mobile{display:flex;position:fixed;z-index:64;bottom:0;left:0;right:0;align-items:center;justify-content:space-between;gap:12px;background:#1a1b20f5;border-top:1px solid #798ba434;box-shadow:0 -8px 28px #0006;padding:12px max(20px,env(safe-area-inset-left));padding-bottom:max(12px,env(safe-area-inset-bottom))}
- .lfx .lfx-sticky-selection{flex:1;min-width:0;border:1px dashed #8792a462;border-radius:8px;font-size:12px;color:#c3c6d2;text-align:center;padding:11px 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
- .lfx .lfx-sticky-mobile button{min-height:44px;border:0;border-radius:8px;background:linear-gradient(100deg,#82b9fb,#729fec);color:#12213b;padding:0 20px;font-size:13px;font-weight:850}
 }
 @media(max-width:767px){
  .lfx .lfx-container{width:calc(100% - 28px)}
@@ -112,15 +91,9 @@
  .lfx .lfx-trust b{font-size:12px}
  .lfx .lfx-content{padding-top:18px;padding-bottom:70px}
  .lfx .lfx-mobile-tabs{margin:0 0 16px}
- .lfx .lfx-layout{display:block}
- .lfx .lfx-aside{display:none}
  .lfx .lfx-sections{gap:16px}
  .lfx .lfx-panel-content{padding:14px}
  .lfx .lfx-field-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .lfx .lfx-sticky-mobile{display:flex;position:fixed;z-index:64;bottom:0;left:0;right:0;align-items:center;justify-content:space-between;gap:10px;background:#1a1b20f5;border-top:1px solid #798ba434;box-shadow:0 -8px 28px #0006;padding:12px max(12px,env(safe-area-inset-left));padding-bottom:max(12px,env(safe-area-inset-bottom))}
- .lfx .lfx-sticky-selection{flex:1;min-width:0;border:1px dashed #8792a462;border-radius:8px;font-size:10px;color:#c3c6d2;text-align:center;padding:11px 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
- .lfx .lfx-sticky-mobile button{min-height:43px;flex:none;border:0;border-radius:8px;background:linear-gradient(100deg,#82b9fb,#729fec);color:#12213b;padding:0 14px;font-size:12px;font-weight:850}
- .lfx .lfx-sticky-mobile b{font-size:16px}
  .lf-customer .lf-live-support{bottom:90px}
 }
 @media(max-width:420px){
@@ -129,8 +102,6 @@
  .lfx .lfx-product-intro h1{font-size:15px}
  .lfx .lfx-trust span{font-size:9px}
  .lfx .lfx-field-grid{gap:9px}
- .lfx .lfx-sticky-selection{font-size:9px}
- .lfx .lfx-sticky-mobile button{font-size:11px;padding:0 11px}
 }
 
 /* LFAMILIA checkout sizing: no fixed-height nominal cards, no forced grid row tracks.
@@ -244,4 +215,165 @@
 }
 @media(min-width:1024px) and (max-width:1199px){
  .lfx .lfx-nominal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+
+/* FULL-WIDTH CHECKOUT: one content column at every viewport.
+   The order summary lives in the fixed bottom bar on PC, tablet and phone. */
+.lfx .lfx-layout{display:block;width:100%;min-width:0}
+.lfx .lfx-sections{width:100%;max-width:none;min-width:0}
+.lfx .lfx-content{padding-bottom:clamp(138px,12vw,175px)}
+.lfx .lfx-bottom-bar{
+ position:fixed;
+ inset: auto 0 0;
+ z-index:120;
+ display:block;
+ width:100%;
+ padding:12px max(16px,env(safe-area-inset-left)) max(12px,env(safe-area-inset-bottom));
+ border-top:1px solid rgba(135,165,218,.33);
+ background:rgba(11,17,28,.97);
+ backdrop-filter:blur(18px);
+ box-shadow:0 -10px 34px rgba(0,0,0,.45);
+}
+.lfx .lfx-bottom-inner{
+ display:flex;align-items:stretch;justify-content:space-between;
+ gap:clamp(10px,1.6vw,22px);
+ width:min(1440px,100%);
+ min-width:0;
+ margin:0 auto;
+}
+.lfx .lfx-bottom-summary{
+ display:flex;align-items:center;gap:clamp(9px,1.25vw,15px);
+ flex:1 1 auto;
+ min-width:0;
+ min-height:70px;
+ padding:9px clamp(10px,1.5vw,19px);
+ border:1px dashed rgba(155,180,215,.45);
+ border-radius:12px;
+ background:rgba(36,47,68,.53);
+ color:#edf4ff;
+ text-align:left;
+ cursor:pointer;
+}
+.lfx .lfx-bottom-summary:hover{background:rgba(54,71,103,.75)}
+.lfx .lfx-bottom-thumb{
+ flex:0 0 46px;
+ display:flex;justify-content:center;align-items:center;
+ width:46px;height:46px;
+ border-radius:8px;
+ background:#263655;color:#9cbffd;
+ overflow:hidden;
+ font-size:24px;
+}
+.lfx .lfx-bottom-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.lfx .lfx-bottom-copy{
+ flex:1 1 auto;min-width:0;
+ display:flex;flex-direction:column;
+ gap:5px;
+}
+.lfx .lfx-bottom-caption{
+ display:block;max-width:100%;
+ color:#a7b9d3;
+ font-size:clamp(10px,.85vw,12px);
+ line-height:1.3;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.lfx .lfx-bottom-copy strong{
+ display:block;
+ max-width:100%;
+ font-size:clamp(12px,1.05vw,15px);
+ line-height:1.35;
+ color:#f1f6ff;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.lfx .lfx-bottom-amount{
+ flex:0 0 auto;
+ display:flex;flex-direction:column;gap:4px;
+ text-align:right;
+ align-items:flex-end;
+}
+.lfx .lfx-bottom-amount span{
+ display:block;
+ color:#a7b9d3;
+ font-size:clamp(10px,.78vw,12px);
+ line-height:1.3;
+ white-space:nowrap;
+}
+.lfx .lfx-bottom-amount strong{
+ display:block;
+ color:#f1f7ff;
+ font-size:clamp(16px,1.4vw,21px);
+ line-height:1.25;
+ font-weight:850;
+ white-space:nowrap;
+ font-variant-numeric:tabular-nums;
+}
+.lfx .lfx-bottom-chevron{flex:0 0 auto;color:#aec8ec;font-size:19px}
+.lfx .lfx-bottom-pay{
+ flex:0 0 auto;
+ display:flex;align-items:center;justify-content:center;
+ gap:15px;
+ min-width:clamp(160px,16vw,230px);
+ min-height:70px;
+ padding:12px 20px;
+ border:0;
+ border-radius:12px;
+ background:linear-gradient(105deg,#91c7ff,#729fea);
+ color:#0c1a34;
+ cursor:pointer;
+ font-size:clamp(13px,1vw,16px);
+ font-weight:900;
+ box-shadow:0 5px 18px #3f7dd436;
+ white-space:nowrap;
+}
+.lfx .lfx-bottom-pay b{font-size:20px;line-height:1}
+.lfx .lfx-bottom-pay:hover{filter:brightness(1.06)}
+.lfx .lfx-bottom-summary:focus-visible,.lfx .lfx-bottom-pay:focus-visible{
+ outline:2px solid #afdcff;outline-offset:3px;
+}
+@media(min-width:1600px){
+ .lfx .lfx-bottom-inner{width:min(1480px,100%)}
+}
+@media(min-width:768px) and (max-width:1023px){
+ .lfx .lfx-bottom-inner{width:100%}
+ .lfx .lfx-bottom-pay{min-width:175px;min-height:62px}
+ .lfx .lfx-bottom-summary{min-height:62px}
+}
+@media(max-width:767px){
+ .lfx .lfx-bottom-bar{
+  padding:10px max(12px,env(safe-area-inset-left)) max(12px,env(safe-area-inset-bottom));
+ }
+ .lfx .lfx-bottom-inner{width:100%;gap:10px}
+ .lfx .lfx-bottom-summary{gap:7px;padding:9px 10px;min-height:54px;border-radius:9px}
+ .lfx .lfx-bottom-thumb,.lfx .lfx-bottom-chevron{display:none}
+ .lfx .lfx-bottom-caption{font-size:9px}
+ .lfx .lfx-bottom-copy strong{font-size:11px}
+ .lfx .lfx-bottom-amount span{font-size:9px}
+ .lfx .lfx-bottom-amount strong{font-size:14px}
+ .lfx .lfx-bottom-pay{
+  min-width:132px;min-height:54px;
+  gap:7px;padding:0 12px;border-radius:9px;
+  font-size:12px;
+ }
+ .lfx .lfx-bottom-pay b{font-size:16px}
+ .lfx .lfx-content{padding-bottom:135px}
+}
+@media(max-width:390px){
+ .lfx .lfx-bottom-bar{padding-inline:10px}
+ .lfx .lfx-bottom-inner{gap:8px}
+ .lfx .lfx-bottom-summary{padding:8px;gap:5px}
+ .lfx .lfx-bottom-caption{font-size:8px}
+ .lfx .lfx-bottom-copy strong{font-size:10px}
+ .lfx .lfx-bottom-amount span{font-size:8px}
+ .lfx .lfx-bottom-amount strong{font-size:12px}
+ .lfx .lfx-bottom-pay{min-width:122px;padding-inline:9px;font-size:11px}
+}
+/* Override the storefront's high-specificity global action font rules, only for our own bottom bar. */
+.lf-customer.lf-customer.lf-customer .lfx .lfx-bottom-summary,
+.lf-customer.lf-customer.lf-customer .lfx .lfx-bottom-pay{font-family:inherit!important}
+@media(min-width:768px){
+ .lf-customer.lf-customer.lf-customer .lfx .lfx-bottom-pay{font-size:15px!important}
+}
+@media(max-width:767px){
+ .lf-customer.lf-customer.lf-customer .lfx .lfx-bottom-pay{font-size:12px!important}
 }
