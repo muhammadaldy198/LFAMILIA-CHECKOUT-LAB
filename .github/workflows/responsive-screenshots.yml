@@ -1,0 +1,35 @@
+name: Checkout Lab responsive screenshots
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/responsive-screenshots.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install screenshot browser
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Capture real Vercel webpage at 10 viewport sizes
+        run: node scripts/capture-responsive.mjs
+        env:
+          CHECKOUT_LAB_URL: https://lfamilia-checkout-lab.vercel.app/
+      - name: Upload all screenshots and audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkout-lab-responsive-screenshots
+          path: responsive-screenshots/
+          if-no-files-found: warn
+          retention-days: 7
