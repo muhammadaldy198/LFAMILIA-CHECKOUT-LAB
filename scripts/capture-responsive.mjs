@@ -54,6 +54,11 @@ try {
         scrollWidth: document.documentElement.scrollWidth,
         horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 2,
         hero: box('.lfx-hero'),
+        heroImage: box('.lfx-hero img'),
+        heroFit: getComputedStyle(document.querySelector('.lfx-hero img')).objectFit,
+        heroPosition: getComputedStyle(document.querySelector('.lfx-hero img')).position,
+        heroImageLoaded: document.querySelector('.lfx-hero img').complete &&
+          document.querySelector('.lfx-hero img').naturalWidth > 0,
         productCover: box('.lfx-product-cover'),
         productImage: box('.lfx-cover-frame > img'),
         headerProduct: box('.lfx-product-header'),
@@ -69,6 +74,22 @@ try {
         coverSquare: cover ? Math.abs(cover.getBoundingClientRect().width - cover.getBoundingClientRect().height) < 2 : null,
       };
     });
+    // On phone screens the full source artwork fills the vertical axis:
+    // clipped pixels must come exclusively from left and right.
+    const sourceRatio = 1920 / 510;
+    const phone = width < 768;
+    const bannerValid = Boolean(metrics.heroImageLoaded && metrics.heroImage && metrics.hero &&
+      (phone
+        ? metrics.heroPosition === 'absolute' &&
+          Math.abs(metrics.heroImage.height - metrics.hero.height) <= 2 &&
+          metrics.heroImage.width >= metrics.hero.width - 2 &&
+          Math.abs((metrics.heroImage.x + metrics.heroImage.width / 2) -
+            (metrics.hero.x + metrics.hero.width / 2)) <= 2 &&
+          metrics.hero.width / metrics.hero.height < sourceRatio
+        : metrics.heroFit === 'contain' &&
+          metrics.heroPosition === 'static' &&
+          Math.abs(metrics.heroImage.width - metrics.hero.width) <= 2 &&
+          Math.abs(metrics.heroImage.height - metrics.hero.height) <= 2));
     const basename = `${String(width)}x${String(height)}-${label}`;
     await page.screenshot({ path: path.join(output, basename + '-full.png'), fullPage: true, animations: 'disabled' });
     await page.screenshot({ path: path.join(output, basename + '-viewport.png'), fullPage: false, animations: 'disabled' });
@@ -85,10 +106,10 @@ try {
     const screen = metrics.bottomBar;
     const bottomBarFixedToViewport = screen && Math.abs((screen.y + screen.height) - height) <= 2;
     const sidebarAbsent = await page.locator('.lfx-aside').count() === 0;
-    records.push({ label, width, height, status: response?.status(), pageTitle: await page.title(), ...metrics, modalShowsTotal, summaryDismissed, bottomBarFixedToViewport, sidebarAbsent, javascriptErrors: errors });
+    records.push({ label, width, height, status: response?.status(), pageTitle: await page.title(), ...metrics, bannerValid, modalShowsTotal, summaryDismissed, bottomBarFixedToViewport, sidebarAbsent, javascriptErrors: errors });
     console.log(JSON.stringify({ label, width, height, status: response?.status(), horizontalOverflow: metrics.horizontalOverflow,
       fullWidthMain: metrics.fullWidthMain, sidebarAbsent, bottomBarFixedToViewport,
-      modalShowsTotal, summaryDismissed, coverSquare: metrics.coverSquare }));
+      modalShowsTotal, summaryDismissed, coverSquare: metrics.coverSquare, bannerValid, heroFit: metrics.heroFit }));
     await page.close();
   }
 } finally {
@@ -100,7 +121,7 @@ const failures = records.filter(r => r.status !== 200 ||
   r.horizontalOverflow || r.javascriptErrors.length ||
   r.sidebar || !r.sidebarAbsent || !r.fullWidthMain ||
   r.bottomBarPosition !== 'fixed' || !r.bottomBarFixedToViewport ||
-  !r.modalShowsTotal || !r.summaryDismissed || !r.coverSquare);
+  !r.modalShowsTotal || !r.summaryDismissed || !r.coverSquare || !r.bannerValid);
 if (failures.length) {
   console.error('Responsive test failures:', JSON.stringify(failures, null, 2));
   process.exitCode = 1;
