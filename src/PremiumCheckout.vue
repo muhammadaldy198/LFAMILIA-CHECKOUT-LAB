@@ -101,13 +101,13 @@ function order(){summaryModal.value=false;const missing=props.fields.some(x=>x.i
   </main>
   <div class="lfx-bottom-bar" role="region" aria-label="Ringkasan dan pembayaran">
     <div class="lfx-bottom-inner">
-      <button type="button" class="lfx-bottom-summary" @click="openSummary" aria-label="Lihat rincian ringkasan pesanan">
+      <button id="lfx-bottom-summary" type="button" class="lfx-bottom-summary" @click="openSummary" aria-label="Lihat rincian ringkasan pesanan">
         <span class="lfx-bottom-thumb" aria-hidden="true"><img v-if="selected?.image_url || product.image_url" :src="selected?.image_url || product.image_url" alt=""/><span v-else>✦</span></span>
         <span class="lfx-bottom-copy"><span class="lfx-bottom-caption">Ringkasan Pesanan · {{product.name}}</span><strong>{{selected?.name || 'Belum ada nominal dipilih'}}</strong></span>
         <span class="lfx-bottom-amount"><span>Total Bayar</span><strong>{{selected ? money(total) : 'Rp 0'}}</strong></span>
         <span class="lfx-bottom-chevron" aria-hidden="true">⌃</span>
       </button>
-      <button class="lfx-bottom-pay" type="button" @click="order">Bayar Sekarang <b aria-hidden="true">→</b></button>
+      <button id="lfx-bottom-pay" class="lfx-bottom-pay" type="button" @click="order">Bayar Sekarang <b aria-hidden="true">→</b></button>
     </div>
   </div>
 

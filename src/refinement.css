@@ -237,6 +237,7 @@
  box-shadow:0 -10px 34px rgba(0,0,0,.45);
 }
 .lfx .lfx-bottom-inner{
+ --lfx-bottom-control-height:70px;
  display:flex;align-items:stretch;justify-content:space-between;
  gap:clamp(10px,1.6vw,22px);
  width:min(1440px,100%);
@@ -336,15 +337,14 @@
  .lfx .lfx-bottom-inner{width:min(1480px,100%)}
 }
 @media(min-width:768px) and (max-width:1023px){
- .lfx .lfx-bottom-inner{width:100%}
- .lfx .lfx-bottom-pay{min-width:175px;min-height:62px}
- .lfx .lfx-bottom-summary{min-height:62px}
+ .lfx .lfx-bottom-inner{width:100%;--lfx-bottom-control-height:62px}
+ .lfx .lfx-bottom-pay{min-width:175px}
 }
 @media(max-width:767px){
  .lfx .lfx-bottom-bar{
   padding:10px max(12px,env(safe-area-inset-left)) max(12px,env(safe-area-inset-bottom));
  }
- .lfx .lfx-bottom-inner{width:100%;gap:10px}
+ .lfx .lfx-bottom-inner{width:100%;gap:10px;--lfx-bottom-control-height:54px}
  .lfx .lfx-bottom-summary{gap:7px;padding:9px 10px;min-height:54px;border-radius:9px}
  .lfx .lfx-bottom-thumb,.lfx .lfx-bottom-chevron{display:none}
  .lfx .lfx-bottom-caption{font-size:9px}
@@ -369,12 +369,37 @@
  .lfx .lfx-bottom-amount strong{font-size:12px}
  .lfx .lfx-bottom-pay{min-width:122px;padding-inline:9px;font-size:11px}
 }
-/* Override the storefront's high-specificity global action font rules, only for our own bottom bar. */
-.lf-customer.lf-customer.lf-customer .lfx .lfx-bottom-summary,
-.lf-customer.lf-customer.lf-customer .lfx .lfx-bottom-pay{font-family:inherit!important}
-@media(min-width:768px){
- .lf-customer.lf-customer.lf-customer .lfx .lfx-bottom-pay{font-size:15px!important}
+/* Checkout Lab-only isolation from CustomerShell's !important 36/40px
+   button control rules. IDs deliberately win the cascade without changing app.css. */
+#lfx-bottom-summary,
+#lfx-bottom-pay{
+ box-sizing:border-box!important;
+ display:flex!important;
+ align-items:center!important;
+ align-self:stretch!important;
+ height:var(--lfx-bottom-control-height)!important;
+ min-height:var(--lfx-bottom-control-height)!important;
+ max-height:var(--lfx-bottom-control-height)!important;
+ font-family:inherit!important;
+ line-height:1.2!important;
+}
+#lfx-bottom-summary{
+ min-width:0!important;
+ justify-content:flex-start!important;
+ text-align:left!important;
+ padding-block:8px!important;
+}
+#lfx-bottom-pay{
+ flex-shrink:0!important;
+ justify-content:center!important;
+ text-align:center!important;
+ padding-block:0!important;
+ font-size:15px!important;
+ font-weight:850!important;
 }
 @media(max-width:767px){
- .lf-customer.lf-customer.lf-customer .lfx .lfx-bottom-pay{font-size:12px!important}
+ #lfx-bottom-pay{font-size:12px!important}
+}
+@media(max-width:390px){
+ #lfx-bottom-pay{font-size:11px!important}
 }

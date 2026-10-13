@@ -69,6 +69,18 @@ try {
         bottomBar: box('.lfx-bottom-bar'),
         bottomSummary: box('.lfx-bottom-summary'),
         bottomAction: box('.lfx-bottom-pay'),
+        bottomPayFontPx: Number.parseFloat(getComputedStyle(document.querySelector('.lfx-bottom-pay')).fontSize),
+        bottomSummaryHeightPx: document.querySelector('.lfx-bottom-summary').getBoundingClientRect().height,
+        bottomPayHeightPx: document.querySelector('.lfx-bottom-pay').getBoundingClientRect().height,
+        bottomControlsAligned: (() => {
+          const a = document.querySelector('.lfx-bottom-summary').getBoundingClientRect();
+          const b = document.querySelector('.lfx-bottom-pay').getBoundingClientRect();
+          const height = window.innerWidth < 768 ? 54 : window.innerWidth < 1024 ? 62 : 70;
+          return Math.abs(a.top - b.top) < 1 &&
+            Math.abs(a.bottom - b.bottom) < 1 &&
+            Math.abs(a.height - height) < 1 &&
+            Math.abs(b.height - height) < 1;
+        })(),
         bottomBarPosition: getComputedStyle(document.querySelector('.lfx-bottom-bar')).position,
         fullWidthMain: Math.abs((box('.lfx-sections')?.width ?? 0) - (box('.lfx-layout')?.width ?? 0)) < 4,
         coverSquare: cover ? Math.abs(cover.getBoundingClientRect().width - cover.getBoundingClientRect().height) < 2 : null,
@@ -109,7 +121,8 @@ try {
     records.push({ label, width, height, status: response?.status(), pageTitle: await page.title(), ...metrics, bannerValid, modalShowsTotal, summaryDismissed, bottomBarFixedToViewport, sidebarAbsent, javascriptErrors: errors });
     console.log(JSON.stringify({ label, width, height, status: response?.status(), horizontalOverflow: metrics.horizontalOverflow,
       fullWidthMain: metrics.fullWidthMain, sidebarAbsent, bottomBarFixedToViewport,
-      modalShowsTotal, summaryDismissed, coverSquare: metrics.coverSquare, bannerValid, heroFit: metrics.heroFit }));
+      modalShowsTotal, summaryDismissed, coverSquare: metrics.coverSquare, bannerValid, heroFit: metrics.heroFit,
+      bottomControlsAligned: metrics.bottomControlsAligned, payHeight: metrics.bottomPayHeightPx, summaryHeight: metrics.bottomSummaryHeightPx, payFont: metrics.bottomPayFontPx }));
     await page.close();
   }
 } finally {
@@ -121,7 +134,9 @@ const failures = records.filter(r => r.status !== 200 ||
   r.horizontalOverflow || r.javascriptErrors.length ||
   r.sidebar || !r.sidebarAbsent || !r.fullWidthMain ||
   r.bottomBarPosition !== 'fixed' || !r.bottomBarFixedToViewport ||
-  !r.modalShowsTotal || !r.summaryDismissed || !r.coverSquare || !r.bannerValid);
+  !r.modalShowsTotal || !r.summaryDismissed || !r.coverSquare || !r.bannerValid ||
+  !r.bottomControlsAligned ||
+  r.bottomPayFontPx !== (r.width <= 390 ? 11 : r.width < 768 ? 12 : 15));
 if (failures.length) {
   console.error('Responsive test failures:', JSON.stringify(failures, null, 2));
   process.exitCode = 1;
