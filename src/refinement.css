@@ -39,8 +39,8 @@
 
 /* Sole source of responsive layout geometry. Base LFAMILIA CustomerShell is untouched. */
 .lfx .lfx-container{width:min(1440px,calc(100% - clamp(28px,5vw,96px)));max-width:none;margin-inline:auto}
-.lfx .lfx-hero{position:relative;width:100%;height:clamp(225px,22vw,355px);max-height:none;min-height:0;overflow:hidden;background:#172340}
-.lfx .lfx-hero img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center}
+.lfx .lfx-hero{position:relative;width:100%;height:clamp(225px,22vw,355px);max-height:none;min-height:0;overflow:hidden;background:linear-gradient(110deg,#0c1730 0%,#22316b 52%,#31265e 100%)}
+.lfx .lfx-hero img{position:static;display:block;width:100%;height:100%;max-width:none;object-fit:contain;object-position:center center;transform:none}
 .lfx .lfx-hero-overlay{pointer-events:none}
 .lfx .lfx-hero-micro{bottom:15px;right:max(30px,calc((100vw - 1390px)/2))}
 .lfx .lfx-product-header-inner{--lfx-cover-size:clamp(172px,14vw,232px);display:grid;grid-template-columns:var(--lfx-cover-size) minmax(0,1fr);grid-template-rows:auto auto;gap:4px clamp(16px,2.4vw,36px);min-height:clamp(155px,11vw,200px);align-content:center;align-items:center;padding-block:17px}
@@ -78,7 +78,8 @@
 @media(max-width:767px){
  .lfx .lfx-container{width:calc(100% - 28px)}
  .lfx .lfx-hero{height:clamp(176px,48vw,230px)}
- .lfx .lfx-hero img{object-fit:cover;object-position:center}
+ /* Mobile: make the source image exactly as tall as the banner, retaining its intrinsic 1920:510 aspect ratio. Overflow clips sides only, never the top or bottom. */
+ .lfx .lfx-hero img{position:absolute;top:0;left:50%;width:auto;height:100%;min-width:100%;max-width:none;object-fit:fill;object-position:center center;transform:translateX(-50%)}
  .lfx .lfx-hero-micro{display:none}
  .lfx .lfx-product-header-inner{--lfx-cover-size:clamp(112px,30vw,142px);grid-template-columns:var(--lfx-cover-size) minmax(0,1fr);grid-template-rows:auto auto;gap:4px 12px;min-height:128px;padding:10px 0 12px}
  .lfx .lfx-product-cover{grid-column:1;grid-row:1;top:calc(var(--lfx-cover-size) * -0.45);margin-bottom:calc(var(--lfx-cover-size) * -0.38)}
